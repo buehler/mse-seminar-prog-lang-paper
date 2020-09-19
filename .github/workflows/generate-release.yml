@@ -27,6 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Install LaTeX diff
         run: sudo apt-get install -y latexdiff
       - name: Fetch latest Tag
@@ -34,6 +36,7 @@ jobs:
           rm -rf latexdiff-base
           mkdir latexdiff-base
           TAG=$(git describe --abbrev=0 || git rev-list --max-parents=0 HEAD)
+          echo "Found git ref: $TAG"
           git archive --format=tar $TAG | (cd latexdiff-base && tar xf -)
       - name: Create LaTeX Diff
         run: |
