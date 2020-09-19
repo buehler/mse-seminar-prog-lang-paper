@@ -1,0 +1,22 @@
+name: Build Paper
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    name: Build and Upload Paper
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
+          working_directory: src
+      - uses: actions/upload-artifact@v2
+        with:
+          name: paper
+          path: src/main.pdf

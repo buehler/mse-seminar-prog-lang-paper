@@ -1,0 +1,58 @@
+% Template for articles
+% Based on the ACM SIGPLAN proceedings style
+% (c) Farhad Mehta 2020
+
+
+%%%%%%%%%%-----TEMPLATE
+\documentclass[sigplan, nonacm=true, screen=true, timestamp=true, review=false]{acmart}
+
+% Note: Earlier verisons acmart before TeXLive 2020 may not support the option `nonacm`
+% There is a workaround below for this case.
+
+% The following 4 lines are a workaround in case you are working with a version of acmart that does not support the `noasm` option. 
+% \settopmatter{printacmref=false}
+% \setcopyright{none}
+% \renewcommand\footnotetextcopyrightpermission[1]{}
+% \pagestyle{plain}
+
+%%%%%%%%%%-----CONFIGURATION
+\input{configuration}
+
+%%%%%%%%%%-----TITLEPAGE
+\title{Your Title Here}
+\subtitle{Your subtitle here (optional)}
+
+\author{Christoph Bühler}
+\affiliation{OST Eastern Switzerland University of Applied Sciences}
+\affiliation{MSE Seminar ``Programming Languages''}
+\affiliation{Supervisor: Farhad Mehta}
+\affiliation{Semester: Autumn/Spring 2020}
+
+\keywords{lambda calculus, type systems}
+
+
+%%%%%%%%%%-----DOCUMENT
+\begin{document}
+
+% \input{sections/0_abstract.tex}
+
+\maketitle
+
+%%%%%%%%%%-----BEGIN_CONTENT
+
+% include your separate tex-files here!
+% \input{sections/1_introduction.tex}
+% \input{sections/2_lambda_calculus.tex}
+% \input{sections/3_simply_typed_calculus.tex}
+% \input{sections/2_tikz_example}
+% \input{sections/3_quotation_example}
+% \input{sections/4_citations_and_references}
+
+%%%%%%%%%%-----BIBLIOGRAPHY
+
+\bibliographystyle{alpha}
+\bibliography{bibliography}
+
+%%%%%%%%%%-----END_DOCUMENT
+
+\end{document}
