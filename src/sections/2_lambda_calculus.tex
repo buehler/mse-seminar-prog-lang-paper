@@ -1,20 +1,43 @@
 \section{Lambda Calculus}
 
-Very briefly describe the untyped lambda calculus
-with reference to the paper of Simon Gubler
-(which writes the paper for the untyped calculus)
+A computer program can be described in multiple
+ways. A. M. Turing defined the turing machine
+in \cite{aturingMachine} in the year 1937. This
+machine was an abstract model of computation.
+In contrast to a "machine", the mathematical model
+of a computer program was defined by Alonzo Church
+\cite{churchLogic}. It uses mathematical logic
+to run calculations. All elements can be described
+in mathematical terms.
 
-The brief description should provide an overview of
-terms and elements so that the reader can advance
-to the transition to the typed system.
+The untyped $\lambda$-Calculus is turing complete,
+which means it can compute \textit{any} program and
+therefore can run infinitely. This is a contrast to
+the simply typed calculus, which limits the executable
+terms in the way that they never reach an erroneous state.
+In an untyped $\lambda$ system, it is possible to search
+for the successor of "true", which
+requires the argument to be a number and therefore
+results in a stuck state.
 
-\begin{enumerate}
-    \item simple syntax example
-    \item simple rules
-          \begin{itemize}
-              \item variables
-              \item abstractions
-              \item applications
-          \end{itemize}
-    \item simple typescript example \cite{lambdaCalcInTS}
-\end{enumerate}
+Since it is not desirable for computer programs to run to infinity,
+the mathematical system of types \cite{churchLogic} was defined.
+
+% Very briefly describe the untyped lambda calculus
+% with reference to the paper of Simon Gubler
+% (which writes the paper for the untyped calculus)
+
+% The brief description should provide an overview of
+% terms and elements so that the reader can advance
+% to the transition to the typed system.
+
+% \begin{enumerate}
+%     \item simple syntax example
+%     \item simple rules
+%           \begin{itemize}
+%               \item variables
+%               \item abstractions
+%               \item applications
+%           \end{itemize}
+%     \item simple typescript example \cite{lambdaCalcInTS}
+% \end{enumerate}

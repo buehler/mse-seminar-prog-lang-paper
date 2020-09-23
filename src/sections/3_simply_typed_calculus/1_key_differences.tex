@@ -1,6 +1,30 @@
-\subsection{Key Differences}
+\subsection{Key Difference}
 
-Briefly describe the key differences between
-the untyped and the simply typed calculus.
+The simply typed calculus relies upon static type analysis.
+This means, to determine if a program is \textit{well-typed}, no
+machine needs to run the program. Also, the simply typed calculus is
+a system with the normalization property \cite{pierce2002ProgLang}
+\cite{baader_nipkow_1998}.
 
-further sections will specify those differences.
+We extend the untyped $\lambda$ grammar
+
+\begin{bnf*}
+    \bnfprod{t}
+    {\bnfts{x} \bnfsp \bnftd{variable}}\\
+    \bnfmore{}
+    {\bnfts{$\lambda$x.}\bnfpn{t} \bnfsp \bnftd{abstraction}}\\
+    \bnfmore{}
+    {\bnfpn{t} \bnfpn{t} \bnfsp \bnftd{application}}
+\end{bnf*}
+
+And get the typed version that limits values and
+inputs to terms to certain types.
+
+\begin{bnf*}
+    \bnfprod{t}
+    {\bnfts{x\colorbox{lightgray}{:T}} \bnfsp \bnftd{variable}}\\
+    \bnfmore{}
+    {\bnfts{$\lambda$x\colorbox{lightgray}{:T}.}\bnfpn{t} \bnfsp \bnftd{abstraction}}\\
+    \bnfmore{}
+    {\bnfpn{t} \bnfpn{t} \bnfsp \bnftd{application}}
+\end{bnf*}
