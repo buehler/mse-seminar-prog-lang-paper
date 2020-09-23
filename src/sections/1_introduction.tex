@@ -1,10 +1,39 @@
 \section{Introduction}
 
-Motivation why the lambda calculus is needed in
-programming languages.
+All modern programming languages have type systems.
+They are either of a more dynamic nature - like JavaScript -
+or statically typed like C-Sharp. Even if we talk about functional
+languages like Haskell, they have a type system that helps
+the developer to create programs.
 
-Describe the changes from untyped to simply typed
-calculus and what it actually does to the system
-(it narrows the "compilable" results)
+But why are type systems helpful and how do they work
+is not a trivial question to be answered. Consider
+the following code statement:
 
-\cite{pierce2002ProgLang}
+\begin{lstlisting}[caption={Untyped language},captionpos=b]
+    foo = "Hello World"
+    bar = 42
+    foo + bar //?
+\end{lstlisting}
+
+As humans, we immediately understand that this statement
+is not going to terminate well - assuming we have an untyped
+language. Strings and numbers are not
+of the same type and cannot be added together. To determine
+that this is not going to work, the computer needs to execute
+the statements one by one and will encounter a wrong state.
+
+A type system can prevent such errors and create a
+human readable message when compiling such a program.
+To understand a type system, it is necessary to use
+maths to explain how we can check and derive types.
+Such a mathematical system is the $\lambda$-Calculus.
+
+The reader should have an understanding in programming
+languages and a brief understanding of the untyped
+$\lambda$-Calculus which is described in the first
+chapters of \cite{pierce2002ProgLang}.
+
+The following chapters will define some knowledge about
+the untyped $\lambda$-Calculus and then introduce the
+reader to the simply typed $\lambda$-Calculus.
