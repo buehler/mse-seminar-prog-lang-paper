@@ -26,9 +26,163 @@ concepts.
 % and can interpret what the simply typed lambda calculus is. Explained
 % in terms and examples that a normal experienced developer should understand.
 
-\input{sections/3_simply_typed_calculus/1_key_differences.tex}
-\input{sections/3_simply_typed_calculus/2_types.tex}
-\input{sections/3_simply_typed_calculus/3_typed_lambda_calculus.tex}
-\input{sections/3_simply_typed_calculus/4_extensions.tex}
-\input{sections/3_simply_typed_calculus/5_references.tex}
-\input{sections/3_simply_typed_calculus/6_exceptions.tex}
+\subsection{Key Difference}
+
+The simply typed calculus relies upon static type analysis.
+This means, to determine if a program is \textit{well-typed}
+(i.e. it compiles according to the given typing rules \cite{cardelliTypeSystems}), no
+machine needs to run the program.
+
+% We extend the untyped $\lambda$ grammar:
+
+% \begin{bnfgrammar}
+%     t ::= : terms$\colon$
+%     | x : variable
+%     | $\lambda$x.t : abstraction
+%     | t t : application
+% \end{bnfgrammar}
+
+% \begin{bnf*}
+%     \bnfprod{t}
+%     {\bnfts{x} \bnfsp \bnftd{variable}}\\
+%     \bnfmore{}
+%     {\bnfts{$\lambda$x.}\bnfpn{t} \bnfsp \bnftd{abstraction}}\\
+%     \bnfmore{}
+%     {\bnfpn{t} \bnfpn{t} \bnfsp \bnftd{application}}
+% \end{bnf*}
+
+% And get the typed version that limits values and
+% inputs to terms to certain types.
+
+% \begin{bnfgrammar}
+%     t ::= : terms$\colon$
+%     | x$\colon$T : variable
+%     | $\lambda$x$\colon$T.t : abstraction
+%     | t t : application
+% \end{bnfgrammar}
+
+% \begin{bnf*}
+%     \bnfprod{t}
+%     {\bnfts{x\colorbox{lightgray}{:T}} \bnfsp \bnftd{variable}}\\
+%     \bnfmore{}
+%     {\bnfts{$\lambda$x\colorbox{lightgray}{:T}.}\bnfpn{t} \bnfsp \bnftd{abstraction}}\\
+%     \bnfmore{}
+%     {\bnfpn{t} \bnfpn{t} \bnfsp \bnftd{application}}
+% \end{bnf*}
+
+The limitation of the input can eliminate stuck states
+and in conjunction with the normalization property \cite{pierce2002ProgLang} \cite{baader_nipkow_1998}
+therefore eliminates turing completeness.
+
+A program that successfully compiled in a simply typed
+lambda system is guaranteed to run to completion and not
+reaching any stuck states.
+
+\subsection{Types}
+
+Types in the mathematical language are not the same as a developer
+might expect. A developer sees a type as \textit{bool} or \textit{string},
+while a mathematician defines types as set of elements.
+
+
+
+\subsection{Types in the $\lambda$-Calculus}
+
+To enhance the given grammar with types so that our program
+cannot take expressions like \textit{if succ(0) then true else false},
+some typing restriction must be in place. As seen above,
+
+\begin{lstlisting}[caption={If Condition},captionpos=b]
+    if <something boolean-ish> then
+        // then statement
+    else
+        // else statement
+    end if
+\end{lstlisting}
+
+To describe this mathematically, we need to define what
+"boolean-ish" is.
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | Bool : type of booleans
+\end{bnfgrammar}
+
+Our typing context ("T") now contains the \textit{Bool} type
+and the list of values ("v") contains the values for the
+\textit{true} and \textit{false} constants. We need to add
+typing rules to be able to parse this boolean expression:
+
+true : Bool\\
+false: Bool\\
+t1: bool     t2: T    t3: T\\
+---------------------------\\
+if t1 then t2 else t3 : T
+
+This means that the condition after the \textit{if} must
+be a Bool and the two branches of the condition must have
+the same type.
+
+To make this system more useful, we add natural numbers
+as well with their corresponding type "Nat":
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | ...
+    | Nat : type of natural numbers
+\end{bnfgrammar}
+
+And of course we need some additional typing rules:
+
+0 : Nat\\
+t1 : Nat\\
+---------\\
+succ t1: Nat\\
+t1 : Nat\\
+---------\\
+pred t1: Nat\\
+t1 : Nat\\
+---------\\
+iszero t1: Bool\\
+
+% Describe what types are and what types mean.
+% In terms of mathematics and programming languages.
+
+% Why they are needed for certain tasks.
+
+% \begin{itemize}
+%     \item example types
+%     \item describe in math language
+%     \item translate to "developer language"
+%     \item why do we need them?
+% \end{itemize}
+
+Describe the different types and their context.
+What are function types and how are they used.
+What are the properties of typing.
+
+Ref to Curry/Church
+
+typescript example of church notation with typings.
+
+
+\subsection{Extending types}
+
+\begin{itemize}
+    \item What hides behind "base types"
+    \item the unit type (void)
+    \item other typing constructs for the simple calculus
+\end{itemize}
+
+\subsection{References}
+
+\begin{itemize}
+    \item What is a reference type
+\end{itemize}
+
+\subsection{Error states}
+
+\begin{itemize}
+    \item What exactly is an exception
+    \item How to throw / handle them
+\end{itemize}

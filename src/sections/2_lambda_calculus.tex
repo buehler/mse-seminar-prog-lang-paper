@@ -6,8 +6,8 @@ in \cite{aturingMachine} in the year 1937. This
 machine was an abstract model of computation.
 In contrast to a "machine", the mathematical model
 of a computer program was defined by Alonzo Church
-\cite{churchLogic}. It uses mathematical logic
-to run calculations. All elements can be described
+\cite{churchLambda}. It uses mathematical logic
+to run calculations and all elements can be described
 in mathematical terms.
 
 The untyped $\lambda$-Calculus is turing complete,
@@ -21,7 +21,38 @@ requires the argument to be a number and therefore
 results in a stuck state.
 
 Since it is not desirable for computer programs to run to infinity,
-the mathematical system of types \cite{churchLogic} was defined.
+some basic method has been introduced \cite{churchLogic} to check for typing errors
+and restrict malformed input from beeing inserted into a function
+during compile time.
+
+\todo{reference to simons paper}
+
+For the further progress of this paper, it is necessary to recall
+the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002ProgLang}:
+
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | true : constant true
+    | false : constant false
+    | if t then t else t : conditional
+    | 0 : constant zero
+    | succ t : successor
+    | pred t : predecessor
+    | iszero t : zero test
+\end{bnfgrammar}
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | true : true value
+    | false : false value
+    | nv : numeric value
+\end{bnfgrammar}
+
+\begin{bnfgrammar}
+    nv ::= : numeric values$\colon$
+    | 0 : zero value
+    | succ nv : successor value
+\end{bnfgrammar}
 
 % Very briefly describe the untyped lambda calculus
 % with reference to the paper of Simon Gubler
