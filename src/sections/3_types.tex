@@ -1,0 +1,242 @@
+\section{Types and Simple Types}
+
+To get one step closer towards the goal of having a
+simply typed $\lambda$-Calculus we need to define
+what a type is.
+
+\subsection{Types}
+
+A type is a classification of a value or multiple values.
+We typically use mathematical terms to describe a type and the relation
+of values to their types. When we say ``$x : T$'', we mean that
+``x is of type T'', or in mathematical terms: ``$x \in T$'' \cite{pierce2002ProgLang}.
+This relation makes it possible to determine the type of any computation
+that correlates with x and can be \textit{statically} analyzed.
+For example:
+
+\begin{equation*}
+    \begin{cases}
+        \text{if }   & x,y \in \mathbb{N}            \\
+        \text{then } & f(x,y) = x + y \in \mathbb{N}
+    \end{cases}
+\end{equation*}
+
+We can determine the result type of \textit{f} without
+\textit{running} the function. Shown in typescript syntax this could mean:
+
+\begin{lstlisting}[style=JavaScript, caption={TypeScript type inference}, captionpos=b]
+const x: number = 1
+const y: number = 2
+const f = (x, y) => x + y
+f(x, y) // result is also of type number
+\end{lstlisting}
+
+With such a possibility, we can rule out stuck or meaningless programs.
+But how do we get there? We add the typing relation to
+the grammar and define, that terms and variables must have types:
+
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | x$\colon$T : variable
+    | $\lambda$x$\colon$T.t : abstraction
+    | \dots
+\end{bnfgrammar}
+
+To express types correctly, we also need new syntactic forms:
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | Bool : type of booleans
+    | Nat : type of natural numbers
+\end{bnfgrammar}
+
+And in addition to the syntactic definition, we need typing rules
+that define the types of the arithmetic expression on top of
+the rules that are given by the untyped $\lambda$-Calculus.
+
+\begin{center}
+    \texttt{true : Bool}
+    
+    \texttt{false : Bool}
+    
+    \texttt{0 : Nat}
+\end{center}
+
+\[\infer{ \text{if } t_1 \text{ then } t_2 \text{ else } t_3 \colon \texttt{T} }{ t_1 \colon \texttt{Bool} & t_2 \colon \texttt{T} & t_3 \colon \texttt{T} }\]
+
+\[\infer{ \text{succ } t_1 \colon \texttt{Nat} }{ t_1 \colon \texttt{Nat} }\]
+
+\[\infer{ \text{pred } t_1 \colon \texttt{Nat} }{ t_1 \colon \texttt{Nat} }\]
+
+\[\infer{ \text{iszero } t_1 \colon \texttt{Bool} }{ t_1 \colon \texttt{Nat} }\]
+
+This means, we allocate \texttt{true} and \texttt{false} to the \texttt{Bool} type.
+Then we assign \texttt{0} to the \texttt{Nat} type. 
+The derivation rules state that, all \texttt{succ} (successors) and \texttt{pred} predecessors are of the
+\texttt{Nat} type. The rules for the predecessor and successor define, that the result
+of the applied \texttt{succ} or \texttt{pred} function must be of type \texttt{Nat}. The rule for the condition
+defines that the input for the ``\texttt{if}'' must be a boolean value and the result is
+of type \texttt{T}. Both branches of the condition must have the same type.
+
+\subsubsection{Typesafety}
+
+\begin{quotation}
+    Well-typed programs cannot ``go wrong.''
+    \begin{flushright}
+        -- Robin Milner (1978)
+    \end{flushright}
+\end{quotation}
+
+The given typing rules give our typing system a pretty important property:
+\textit{safety} (or \textit{soundness}) \cite{pierce2002ProgLang}.
+In conjunction with the normalization property \cite{pierce2002ProgLang} \cite{baader_nipkow_1998},
+which eliminates the turing completeness in our system, we can guarantee that our programs
+that compile successfully with this type system won't ever go wrong. We can call
+such a program well-typed (i.e. it compiles according to the given typing rules \cite{cardelliTypeSystems}).
+
+This \textit{safety} is defined by two theorems \cite{pierce2002ProgLang}:
+\begin{itemize}
+    \item \textit{Progress}: Well-typed terms are not stuck. They can take
+          a step in the evaluation rules or are a value.
+    \item \textit{Preservation}: A well-typed term that takes a step in the evaluation rules
+          will yield a result that is also well-typed.
+\end{itemize}
+
+\subsection{Intermediate Result}
+
+With the given syntax, evaluation rules and type definitions, we would
+have a type system that could successfully compile the following
+lines of code (the syntax is inspired by TypeScript for a clear
+reference to a computer program):
+
+\begin{lstlisting}[style=JavaScript]
+const tr: boolean = true
+const x: number = 42
+
+if (tr) {
+    x
+} else {
+    x + 1
+}
+\end{lstlisting}
+
+\subsection{Simple Types}
+
+Alonzo Church defined the theory of simple types
+\cite{churchLogic}. In combination with the examples and
+statements of Benjamin C. Pierce \cite{pierce2002ProgLang}, there
+exists a definition of a simple type. Simple types are a first
+approach towards a typesafe environment for developers. They
+contain ``base types'' (or ``value types'') like \texttt{Bool} and
+\texttt{Nat} (natural numbers) as well as ``function types''.
+
+Function types are needed to grant the program the possibility to
+perform computations. Up until now, we can allocate variables to
+types and can perform an \textit{if} condition.
+
+\subsubsection{Base Types}
+
+Base types represent unstructured values in a programming language.
+An incomplete list of such base types one will encounter is:
+
+\begin{itemize}
+    \item Numbers (\texttt{Integers} and \texttt{Float})
+    \item Booleans
+    \item Strings (list of \texttt{Characters})
+\end{itemize}
+
+Since base types are unspectacular and are used to calculate other
+types, literature often substitutes them with a letter for all
+\textit{unknown} base types \cite{pierce2002ProgLang}. Often,
+constructs like $\mathcal{A}$ or other letters are seen. For this
+paper we will establish the following syntactic form
+from Benjamin C. Pierce \cite{pierce2002ProgLang}:
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | A : base type
+\end{bnfgrammar}
+
+\subsubsection{Function Types}
+
+From a theoretical perspective, this language is quite interesting, but to be used
+as a programming language, it lacks some needed features. For example, we need the
+possibility to apply a function to some input to generate some output. Otherwise
+this programming language will be quite boring. To add functions to our typing
+syntax we add the following line:
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | T$\rightarrow$T : type of functions
+\end{bnfgrammar}
+
+A \textit{type environment} ($\Gamma$) is introduced here.
+This environment (or sometimes called \textit{type context}) is
+a set with variables and their types \cite{pierce2002ProgLang}.
+When our type-checker stars, the starting type environment equals
+``$\varnothing$''. With each evaluation step this set will grow
+and contain the specified values.
+
+Now we have the typing syntax for functions, but we need some additional typing
+rules to ensure the types of functions can be calculated statically:
+
+\begin{equation*}
+    \tag{Abstraction}
+    \infer{
+        \Gamma \vdash \lambda x \colon \texttt{T}_1 . t_2 \colon \texttt{T}_1 \rightarrow \texttt{T}_2
+    }{
+        \Gamma,x \colon \texttt{T}_1 \vdash t_2 \colon \texttt{T}_2
+    }
+\end{equation*}
+
+This typing rule for the general abstraction evaluation rule
+of the $\lambda$-Calculus \todo{ref to simons paper} adds
+a premise to our system that translates to ``if $x$ is of
+type $T_1$ and is in our typing context $\Gamma$ and
+the term $t_2$ is of type $T_2$, then the abstraction
+$\lambda x \colon T_1 . t_2$ has the type $T_1 \rightarrow T_2$''.
+
+Also an additional typing rule for variables and applications
+are needed:
+
+\begin{equation*}
+    \tag{Variable}
+    \infer{
+        \Gamma \vdash x \colon \texttt{T}
+    }{
+        x \colon \texttt{T} \in \Gamma
+    }
+\end{equation*}
+
+``The type that is assumed for x is in the set of $\Gamma$''.
+
+\begin{equation*}
+    \tag{Application}
+    \infer{
+        \Gamma \vdash t_1 t_2 \colon \texttt{T}_{12}
+    }{
+        \Gamma \vdash t_1 \colon \texttt{T}_{11} \rightarrow \texttt{T}_{12}
+        &
+        \Gamma \vdash t_2 \colon \texttt{T}_{11}
+    }
+\end{equation*}
+
+``If $t_1$ is a function that takes a $T_{11}$ and returns a
+$T_{12}$ and the term $t_2$ is a value of type $T_{12}$ then
+the result of the application of $t_1$ to $t_2$ will
+be of type $T_{12}$''.
+
+Translated into a programming language:
+
+\begin{lstlisting}[style=JavaScript]
+// number (Variable)
+const x = 1337
+
+// number => string (Abstraction)
+const f = nr => nr.toString()
+
+// string (Application)
+const r = f(x)
+\end{lstlisting}

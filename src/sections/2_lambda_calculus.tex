@@ -41,6 +41,8 @@ programs.
 For the further progress of this paper, it is necessary to recall
 the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002ProgLang}:
 
+\subsection{Terms}
+
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | true : constant true
@@ -52,12 +54,16 @@ the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002P
     | iszero t : zero test
 \end{bnfgrammar}
 
+\subsection{Values}
+
 \begin{bnfgrammar}
     v ::= : values$\colon$
     | true : true value
     | false : false value
     | nv : numeric value
 \end{bnfgrammar}
+
+\subsection{Numeric Values}
 
 \begin{bnfgrammar}
     nv ::= : numeric values$\colon$

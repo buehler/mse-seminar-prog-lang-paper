@@ -1,5 +1,9 @@
 \section{Introduction}
 
+% \begin{quote}
+%     Well-typed programs cannot ``go wrong''.
+% \end{quote}
+
 All modern programming languages have type systems.
 They are either of a more dynamic nature - like JavaScript -
 or statically typed like C\#. Functional languages like Haskell have
@@ -22,10 +26,10 @@ But why type systems are helpful and how they work
 is not a trivial question to be answered. Consider
 the following code statement:
 
-\begin{lstlisting}[caption={Runtime error}, captionpos=b]
-    foo = "Hello World"
-    bar = 42
-    foo - bar // NaN (Not a Number)
+\begin{lstlisting}[style=JavaScript, caption={Runtime error}, captionpos=b]
+foo = "Hello World"
+bar = 42
+foo - bar // NaN (Not a Number)
 \end{lstlisting}
 
 As humans, we immediately understand that this statement
