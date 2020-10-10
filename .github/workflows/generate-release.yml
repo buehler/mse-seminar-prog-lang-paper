@@ -42,6 +42,9 @@ jobs:
         run: |
           cd latexdiff-base/src
           latexdiff -V --flatten main.tex ../../src/main.tex > diff.tex
+          cd ../..
+      - name: Copy latexmkrc file
+        run: cp src/.latexmkrc latexdiff-base/src/.latexmkrc
       - name: Build LaTeX Diff document
         uses: xu-cheng/latex-action@v2
         with:
