@@ -1,31 +1,42 @@
-\section{Lambda Calculus}
+\section{Lambda-Calculus ($\lambda$-Calculus)}
 
-A computer program can be described in multiple
-ways. A. M. Turing defined the turing machine
-in \cite{aturingMachine} in the year 1937. This
-machine was an abstract model of computation.
-In contrast to a "machine", the mathematical model
-of a computer program was defined by Alonzo Church
-\cite{churchLambda}. It uses mathematical logic
-to run calculations and all elements can be described
-in mathematical terms.
+A computer program can be described in various
+ways. One very famous variant is the ``turing machine''
+which was defined in a journal \cite{aturingMachine} by
+A. M. Turing in the year 1937. The turing machine
+is fed with instructions and contains a ``memory'' band
+to write down results for further computation.
+
+Another famous - but more abstract - method to describe
+a computation is the $\lambda$-Calculus. This system was
+specified by Alonzo Church \cite{churchLambda}. It is a mathematical
+model of a computation that only contains three rules
+of operation \cite{pierce2002ProgLang}.
+Those three operations can be viewed in the following ``grammar'':
+
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | x : variable
+    | $\lambda$x.t : abstraction
+    | t t : application
+\end{bnfgrammar}
 
 The untyped $\lambda$-Calculus is turing complete,
 which means it can compute \textit{any} program and
-therefore can run infinitely. This is a contrast to
-the simply typed calculus, which limits the executable
-terms in the way that they never reach an erroneous state.
+therefore can run infinitely.
 In an untyped $\lambda$ system, it is possible to search
-for the successor of "true", which
+for the successor of ``true'', which
 requires the argument to be a number and therefore
 results in a stuck state.
 
 Since it is not desirable for computer programs to run to infinity,
-some basic method has been introduced \cite{churchLogic} to check for typing errors
-and restrict malformed input from being inserted into a function
-during compile time.
+there has to be a way to split up computer programs into two categories:
+The ``useful'' and ``useless'' ones. Any program that will run forever
+or that will be stuck in an error state counts towards the ``useless'' ones.
+Other programs that have valid input and output will be counted to the ``useful''
+programs.
 
-\todo{reference to simons paper}
+\todo{reference to simons paper about the untyped calculus}
 
 For the further progress of this paper, it is necessary to recall
 the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002ProgLang}:
@@ -53,22 +64,3 @@ the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002P
     | 0 : zero value
     | succ nv : successor value
 \end{bnfgrammar}
-
-% Very briefly describe the untyped lambda calculus
-% with reference to the paper of Simon Gubler
-% (which writes the paper for the untyped calculus)
-
-% The brief description should provide an overview of
-% terms and elements so that the reader can advance
-% to the transition to the typed system.
-
-% \begin{enumerate}
-%     \item simple syntax example
-%     \item simple rules
-%           \begin{itemize}
-%               \item variables
-%               \item abstractions
-%               \item applications
-%           \end{itemize}
-%     \item simple typescript example \cite{lambdaCalcInTS}
-% \end{enumerate}

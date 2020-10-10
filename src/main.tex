@@ -6,7 +6,7 @@
 %%%%%%%%%%-----TEMPLATE
 \documentclass[sigplan, nonacm=true, screen=true, timestamp=true, review=false]{acmart}
 
-% Note: Earlier verisons acmart before TeXLive 2020 may not support the option `nonacm`
+% Note: Earlier versions acmart before TeXLive 2020 may not support the option `nonacm`
 % There is a workaround below for this case.
 
 % The following 4 lines are a workaround in case you are working with a version of acmart that does not support the `noasm` option. 
@@ -19,8 +19,8 @@
 \input{configuration}
 
 %%%%%%%%%%-----TITLEPAGE
-\title{Simply typed Lambda-Calculus for developers}
-\subtitle{An introduction to the topic}
+\title{Adding a type system to an untyped language}
+\subtitle{A journey to a type save environment for developers}
 
 \author{Christoph Bühler}
 \affiliation{OST Eastern Switzerland University of Applied Sciences}
@@ -28,7 +28,7 @@
 \affiliation{Supervisor: Farhad Mehta}
 \affiliation{Semester: Autumn/Spring 2020}
 
-\keywords{Lambda-Calculus, type systems}
+\keywords{Lambda-Calculus, type systems, simple types}
 
 %%%%%%%%%%-----DOCUMENT
 \begin{document}
@@ -41,13 +41,13 @@
 
 \input{sections/1_introduction.tex}
 \input{sections/2_lambda_calculus.tex}
-\input{sections/3_simply_typed_calculus.tex}
-\input{sections/4_usage_and_relevance.tex}
-\input{sections/5_conclusion.tex}
+% \input{sections/3_simply_typed_calculus.tex}
+% \input{sections/4_usage_and_relevance.tex}
+% \input{sections/5_conclusion.tex}
 
 %%%%%%%%%%-----BIBLIOGRAPHY
 
-\nocite{latexDerivationTree}
+% \nocite{latexJsListings}
 
 \bibliographystyle{alpha}
 \bibliography{bibliography}
