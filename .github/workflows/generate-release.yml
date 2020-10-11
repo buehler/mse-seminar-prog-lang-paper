@@ -18,6 +18,8 @@ jobs:
         with:
           root_file: main.tex
           working_directory: src
+          latexmk_shell_escape: true
+          extra_system_packages: 'py-pygments'
       - uses: actions/upload-artifact@v2
         with:
           name: paper
@@ -50,6 +52,8 @@ jobs:
         with:
           root_file: diff.tex
           working_directory: latexdiff-base/src
+          latexmk_shell_escape: true
+          extra_system_packages: 'py-pygments'
       - uses: actions/upload-artifact@v2
         with:
           name: diff
