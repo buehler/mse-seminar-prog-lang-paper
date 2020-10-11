@@ -24,13 +24,13 @@ gap and adds a static type analyzer as well as some sort of a compiler
 
 But why type systems are helpful and how they work
 is not a trivial question to be answered. Consider
-the following code statement:
+the following code statements:
 
-\begin{lstlisting}[style=JavaScript, caption={Runtime error}, captionpos=b]
-foo = "Hello World"
-bar = 42
-foo - bar // NaN (Not a Number)
-\end{lstlisting}
+\begin{minted}{JavaScript}
+    foo = "Hello World"
+    bar = 42
+    foo - bar // NaN (Not a Number)
+\end{minted}
 
 As humans, we immediately understand that this statement
 is not going to terminate well - assuming we have an untyped

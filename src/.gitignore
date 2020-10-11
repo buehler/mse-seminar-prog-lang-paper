@@ -8,3 +8,4 @@
 *.out
 *.synctex*
 __latexindent*
+_minted-main

@@ -24,12 +24,12 @@ For example:
 We can determine the result type of \textit{f} without
 \textit{running} the function. Shown in typescript syntax this could mean:
 
-\begin{lstlisting}[style=JavaScript, caption={TypeScript type inference}, captionpos=b]
-const x: number = 1
-const y: number = 2
-const f = (x, y) => x + y
-f(x, y) // result is also of type number
-\end{lstlisting}
+\begin{minted}{TypeScript}
+    const x: number = 1
+    const y: number = 2
+    const f = (x, y) => x + y
+    f(x, y) // result is also of type number
+\end{minted}
 
 With such a possibility, we can rule out stuck or meaningless programs.
 But how do we get there? We add the typing relation to
@@ -109,16 +109,16 @@ have a type system that could successfully compile the following
 lines of code (the syntax is inspired by TypeScript for a clear
 reference to a computer program):
 
-\begin{lstlisting}[style=JavaScript]
-const tr: boolean = true
-const x: number = 42
+\begin{minted}{TypeScript}
+    const tr: boolean = true
+    const x: number = 42
 
-if (tr) {
-    x
-} else {
-    x + 1
-}
-\end{lstlisting}
+    if (tr) {
+        x
+    } else {
+        x + 1
+    }
+\end{minted}
 
 \subsection{Simple Types}
 
@@ -136,8 +136,8 @@ types and can perform an \textit{if} condition.
 
 \subsubsection{Base Types}
 
-Base types represent unstructured values in a programming language.
-An incomplete list of such base types one will encounter is:
+Base types represent unstructured values in a programming language \cite{pierce2002ProgLang}.
+An incomplete list of such base types we will encounter is:
 
 \begin{itemize}
     \item Numbers (\texttt{Integers} and \texttt{Float})
@@ -172,11 +172,11 @@ syntax we add the following line:
     | T$\rightarrow$T : type of functions
 \end{bnfgrammar}
 
-A \textit{type environment} ($\Gamma$) is introduced here.
+A \textit{type environment} ($\Gamma$) is introduced in the following derivation rules.
 This environment (or sometimes called \textit{type context}) is
 a set with variables and their types \cite{pierce2002ProgLang}.
-When our type-checker stars, the starting type environment equals
-``$\varnothing$''. With each evaluation step this set will grow
+When our type-checker starts, the starting type environment equals
+``$\varnothing$'' (the empty set). With each evaluation step, this set will grow
 and contain the specified values.
 
 Now we have the typing syntax for functions, but we need some additional typing
@@ -227,16 +227,16 @@ are needed:
 $T_{12}$ and the term $t_2$ is a value of type $T_{12}$ then
 the result of the application of $t_1$ to $t_2$ will
 be of type $T_{12}$''.
-
+\\[12pt]
 Translated into a programming language:
 
-\begin{lstlisting}[style=JavaScript]
-// number (Variable)
-const x = 1337
+\begin{minted}{TypeScript}
+    // number (Variable)
+    const x = 1337
 
-// number => string (Abstraction)
-const f = nr => nr.toString()
+    // number => string (Abstraction)
+    const f = nr => nr.toString()
 
-// string (Application)
-const r = f(x)
-\end{lstlisting}
+    // string (Application)
+    const r = f(x)
+\end{minted}

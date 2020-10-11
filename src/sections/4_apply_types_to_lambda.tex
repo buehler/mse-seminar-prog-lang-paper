@@ -1,0 +1,513 @@
+\section{$\lambda$-Calculus, Simple Types and Extensions}
+
+When we apply ``simple types'' to the purely untyped
+$\lambda$-Calculus, the result is the ``pure simply typed $\lambda$-Calculus''.
+This could count as a programming language since we can perform
+all basic operations a computation needs. We're also able to analyze
+the code and calculate the types needed for functions and variables
+and therefore can categorize our programs into meaningful and
+meaningless ones. To make the syntax more useful however, we can extend
+our simple types with ``simple extensions'' which do not include any
+form of polymorphism. Those extensions make our language and the type
+checker more useful and able to perform operations.
+
+The following sections will explain such extensions and how they are constructed.
+For the further reading, the rules of the ``pure simply typed $\lambda$-Calculus''
+are stated again \cite{pierce2002ProgLang}:
+
+~\\
+\textbf{Syntax}
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | x : variable
+    | $\lambda$x$\colon$T . t : abstraction
+    | t t : application
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | $\lambda$x$\colon$T . t : abstraction value
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | T$\rightarrow$T : type of functions
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    $\Gamma$ ::= : contexts$\colon$
+    | $\varnothing$ : empty context
+    | $\Gamma$, x$\colon$T : term variable binding
+\end{bnfgrammar}\leavevmode\newline
+
+\textbf{Evaluation}
+\begin{equation*}
+    \tag{Application 1}
+    \infer{
+        t_1 t_2 \rightarrow t'_1 t_2
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there exists an evaluation step from $t_1$ to $t'_1$ take this step
+prior to the evaluation step of $t_2$''. This forces the program, to first
+evaluate all terms of $t_1$ until the next rule hits.
+
+\begin{equation*}
+    \tag{Application 2}
+    \infer{
+        v_1 t_2 \rightarrow v_1 t'_2
+    }{
+        t_2 \rightarrow t'_2
+    }
+\end{equation*}
+``If there exists an evaluation step from $t_2$ to $t'_2$ and the left
+side of the application is already a value, take this step''. This defines
+that when the lefthand side of the application is reduced to a value, evaluate
+the righthand side.
+
+\begin{equation*}
+    \tag{Application Abstraction}
+    (\lambda x \colon T_{11} . t_{12}) v_2 \rightarrow [x \mapsto v_2] t_{12}
+\end{equation*}
+``Replace the variable $x$ with the value $v_2$ in the term $t_{12}$''. This represents
+the effective computation or application of the value to a term.
+
+~\\
+\textbf{Typing}
+\begin{equation*}
+    \tag{Variable}
+    \infer{
+        \Gamma \vdash x \colon \texttt{T}
+    }{
+        x \colon \texttt{T} \in \Gamma
+    }
+\end{equation*}
+
+\begin{equation*}
+    \tag{Application}
+    \infer{
+        \Gamma \vdash t_1 t_2 \colon \texttt{T}_{12}
+    }{
+        \Gamma \vdash t_1 \colon \texttt{T}_{11} \rightarrow \texttt{T}_{12}
+        &
+        \Gamma \vdash t_2 \colon \texttt{T}_{11}
+    }
+\end{equation*}
+
+\begin{equation*}
+    \tag{Abstraction}
+    \infer{
+        \Gamma \vdash \lambda x \colon \texttt{T}_1 . t_2 \colon \texttt{T}_1 \rightarrow \texttt{T}_2
+    }{
+        \Gamma,x \colon \texttt{T}_1 \vdash t_2 \colon \texttt{T}_2
+    }
+\end{equation*}
+
+This in combination with base and function types will be the
+cornerstone of the ``simple extensions'' which we will see in the
+next sections. Those sections will introduce new elements to the given
+categories (``syntax'', ``evaluation'', ``typing'').
+
+\subsection{Unit Type}
+
+The \texttt{unit} type represents a useful type often found in functional
+programming languages like Haskell or F\#. It is used to ``throw away'' a
+computation result and combine multiple computations together \cite{pierce2002ProgLang}.
+In Haskell this can be used in the \texttt{main} function to glue
+several functions together that contain side effects. It can be viewed as
+the ``\texttt{void}'' type in C\# or Java \cite{pierce2002ProgLang}.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | unit : constant unit
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | \dots
+    | unit : constant unit
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | Unit : unit type
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Unit}
+    \Gamma \vdash \texttt{unit} \colon \texttt{Unit}
+\end{equation*}\leavevmode\newline
+
+Added derived form \cite{pierce2002ProgLang}:
+\begin{equation*}
+    t_1 ; t_2 \quad \defeq \quad (\lambda x \colon \texttt{Unit} . t_2) t_1 \text{ where } x \notin FV(t_2)
+\end{equation*}
+``The function is applied to the term $t_1$ where the input variable $x$ is not
+part of the ``free variables''\footnote{Free variables are not bound variables in the term.}
+(FV) of the term $t_2$''.
+
+~\\
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Sequence}
+    \infer{
+        t_1 ; t_2 \rightarrow t'_1 ; t_2
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a sequence (noted by ;) and there is a step from $t_1$ to
+$t'_1$, evaluate the term $t_1$''.
+
+\begin{equation*}
+    \tag{Sequence Next}
+    \texttt{unit} ; t_2 \rightarrow t_2
+\end{equation*}
+``If the lefthand side of a sequence is reduced to \texttt{unit},
+return the result of $t_2$''.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Sequence}
+    \infer{
+        \Gamma \vdash t_1 ; t_2 \colon \texttt{T}_2
+    }{
+        \Gamma \vdash t_1 \colon \texttt{Unit} & \Gamma \vdash t_2 \colon \texttt{T}_2
+    }
+\end{equation*}
+``If $t_1$ is of type \texttt{Unit} and $t_2$ has a type $\texttt{T}_2$ then
+the resulting type of the sequence will be $\texttt{T}_2$''.
+
+\subsection{Ascription}
+
+A very handy tool for our simple programming language is the usage of ascription.
+It is often used for ``documentation'' purposes \cite{pierce2002ProgLang}. It defines
+a way to substitute long type names with shorter ones. An example for such a substitute
+in the Haskell language would be: ``\texttt{type MyType = Double -> Double -> [Char]}''
+which defines the type \texttt{MyType} as a function that takes a double and a double
+and returns an array of characters.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | t as T : ascription
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Ascribe Value}
+    v_1 \text{ as } \texttt{T} \rightarrow v_1
+\end{equation*}
+``The term $v_1 \text{ as } \texttt{T}$ returns $v_1$''.
+
+\begin{equation*}
+    \tag{Ascription Evaluation}
+    \infer{
+        t_1 \text{ as } \texttt{T} \rightarrow t'_1 \text{ as } \texttt{T}
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax''.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Ascribe}
+    \infer{
+        \Gamma \vdash t_1 \text{ as } \texttt{T} \colon \texttt{T}
+    }{
+        \Gamma \vdash t_1 \colon \texttt{T}
+    }
+\end{equation*}
+``If $t_1$ is assumed with the type \texttt{T} in the context,
+the term $t_1 \text{ as } \texttt{T}$ will yield a type \texttt{T}''.
+
+\subsection{Let Bindings}
+
+Let bindings are a useful tool to avoid repetition in complex expressions.
+They are found in Haskell as well:
+
+\begin{minted}{Haskell}
+    add x y =
+        let result = x + y
+        in
+            result
+\end{minted}
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | let x=t in t : let binding
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Let-Bind Value}
+    \texttt{let } x=v_1 \texttt{ in } t_2 \rightarrow [x \mapsto v_1] t_2
+\end{equation*}
+``In the given abstraction $t_2$ replace all occurencies of $x$ with $v_1$''.
+
+\begin{equation*}
+    \tag{Let}
+    \infer{
+        \texttt{let } x=t_1 \texttt{ in } t_2 \rightarrow \texttt{let } x=t'_1 \texttt{ in } t_2
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before evaluating the let binding itself''.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Let}
+    \infer{
+        \Gamma \vdash \texttt{let } x=t_1 \texttt{ in } t_2 \colon \texttt{T}_2
+    }{
+        \Gamma \vdash t_1 \colon \texttt{T}_1 & \Gamma , x \colon \texttt{T}_1 \vdash t_2 \colon \texttt{T}_2
+    }
+\end{equation*}
+``To calculate the type of the let binding, calculate the type of the bound term. The bound
+term will yield the same type as the used term for the binding''.
+
+\subsection{Pairs and Tuples}
+
+Until now, the additions were minor and added some syntactic sugar to the language of
+the simple typed $\lambda$-Calculus. The following simple extensions will enrich
+the language with features that are often found in programming languages.
+
+Pairs - and their more general counterpart Tuples - are a construct to group
+values and terms together. Pairs are product types of exactly two values
+and therefore have slightly different evaluation rules. Tuples are the general way
+of pairs and therefore only the rules of tuples will be explained since they include
+the rules of pairs as well.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | $\{t_i^{i \in 1..n}\}$ : tuple
+    | t.i : projection
+\end{bnfgrammar}\leavevmode\newline
+$\{t_i^{i \in 1..n}\}$ means that for example with $i=3$ we have a tuple
+of three elements. A tuple with $i=2$ would be a pair.
+$\{t_i^{i \in 1..n}\} \text{ with } i=3 \mapsto \{t_1, t_2, t_3\}$.
+The projection is needed to access the elements in a tuple at the given index.
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | \dots
+    | $\{v_i^{i \in 1..n}\}$ : tuple value
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | $\{T_i^{i \in 1..n}\}$ : tuple type
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Tuple projection}
+    \{v_i^{i \in 1..n}\} . j \rightarrow v_j
+\end{equation*}
+``When the projection with index $j$ is applied to a tuple with
+$i$ values, return the value at index $j$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+        t_1 . i \rightarrow t'_1 . i
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before executing the projection''.
+
+\begin{equation*}
+    \tag{Tuple}
+    \infer{
+    \{v_i^{i \in 1..j-1}, t_j, t_k^{k \in j+1..n}\} \rightarrow \{v_i^{i \in 1..j-1}, t'_j, t_k^{k \in j+1..n}\}
+    }{
+    t_j \rightarrow t'_j
+    }
+\end{equation*}
+``If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
+term $t_j$ to $t'_j$ that is not a value''. This forces the tuple to
+be fully evaluated before any projections can be executed on the tuple.
+Also, it enforces the evaluation direction for the tuple from left to write.
+In other terms: $\{t_1, t_2\} \mapsto \{v_1, t_2\} \mapsto \{v_1, v_2\}$.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Tuple}
+    \infer{
+    \Gamma \vdash \{t_i^{i \in 1..n}\} \colon \{\texttt{T}_i^{i \in 1..n}\}
+    }{
+    \text{for each } i & \Gamma \vdash t_i \colon \texttt{T}_i
+    }
+\end{equation*}
+``For each element in the tuple with index $i$, we calculate the type
+and add the whole tuple to the typing context $\Gamma$ in the form $\{T_1, T_2, \dots\}$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+    \Gamma \vdash t_i . j \colon \texttt{T}_j
+    }{
+    \Gamma \vdash t_1 \colon \{\texttt{T}_i^{i \in 1..n}\}
+    }
+\end{equation*}
+``If the term $t_1$ is a tuple type with $i$ entries, the projection
+$t_1 . j$ will yield an element of the type $\texttt{T}_j$''.
+
+\subsection{Records}
+
+Since tuples have indices and must be accessed that way, we may want to
+name the elements in a tuple. ``Records'' provide a way to label entries
+of a tuple and create a possibility to semantically group terms together.
+One could loosely compare them with \texttt{Structs} from programming
+languages like \texttt{GoLang}.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | $\{l_i = t_i^{i \in 1..n}\}$ : record
+    | t.l : projection
+\end{bnfgrammar}\leavevmode\newline
+This syntax rule follows the same principle as for the tuple. One change to
+note is, that the projection is not done via an index but with a label $l$.
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | \dots
+    | $\{l_i = v_i^{i \in 1..n}\}$ : record value
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | $\{l_i \colon T_i^{i \in 1..n}\}$ : tuple of records
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Record projection}
+    \{l_i = v_i^{i \in 1..n}\} . l_j \rightarrow v_j
+\end{equation*}
+``When the projection with label $j$ is applied to a record with
+$i$ values, return the value with the label $j$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+        t_1 . l \rightarrow t'_1 . l
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before executing the projection''.
+
+\begin{equation*}
+    \tag{Record}
+    \infer{
+    \{l_i = v_i^{i \in 1..j-1}, l_j = t_j, l_k = t_k^{k \in j+1..n}\}
+    \rightarrow \{l_i = v_i^{i \in 1..j-1}, l_j = t'_j, l_k = t_k^{k \in j+1..n}\}
+    }{
+    t_j \rightarrow t'_j
+    }
+\end{equation*}
+``If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
+term $l_j = t_j$ to $l_j = t'_j$ that is not a value''. This inforces
+the same evaluation rules on records as the above rules did on tuples.
+In other terms:
+$\{\text{foo}=t_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=v_2\}$.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Record}
+    \infer{
+    \Gamma \vdash \{l_i = t_i^{i \in 1..n}\} \colon \{l_i \colon \texttt{T}_i^{i \in 1..n}\}
+    }{
+    \text{for each } i & \Gamma \vdash t_i \colon \texttt{T}_i
+    }
+\end{equation*}
+``For each element in the record with label $l$, we calculate the type
+and add the whole record to the typing context $\Gamma$ in the form
+$\{l_1 \colon T_1, l_2 \colon T_2, \dots\}$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+    \Gamma \vdash t_i . l_j \colon \texttt{T}_j
+    }{
+    \Gamma \vdash t_1 \colon \{l_i \colon \texttt{T}_i^{i \in 1..n}\}
+    }
+\end{equation*}
+``If the term $t_1$ is a record type with $i$ entries, the projection
+$t_1 . l_j$ will yield an element of the type $\texttt{T}_j$ at
+the position of label $l_j$''.
+
+\subsection{Sums and Variants}
+
+Many programs need to tackle variant types. This means
+that we can sum together multiple shapes of a type into a summary
+type. Such variants are algebraic data types and are often used in functional
+languages with pattern matching. This paper will use the generalized definition
+of the variant to describe the principle. So instead of a sum type \texttt{T + T}
+we use the labeled variant type $\langle l_1 \colon \texttt{T}_1, l_2 \colon \texttt{T}_2 \rangle$.
+
+
+
+With the variant types in place, our language could now type-check and interpret
+the following lines of code (given in the Haskell syntax for readability):
+
+\begin{minted}{Haskell}
+    type Weekend = Saturday | Sunday
+    getName day = case day of
+        Saturday -> "Saturday"
+        Sunday -> "Sunday"
+\end{minted}
+
+\subsection{General Recursion}
+\subsection{Lists}
+\subsection{References}
+\subsection{Exceptions}
+\subsection{Summary}
+
+With those possibilities, a variety of concepts can be created.
+While there exists the concept of ``exceptions'' for example, it does
+not support subtyping of any kind. Polymorphism is part of a higher
+version of a type system, for example System F.
+
+\todo{reference to marcs paper about systemF}
+
+The given base of the ``pure simple typed $\lambda$-Calculus'' and
+the simple extensions above now give us a language that can successfully compile
+and compute the following lines of (TypeScript-ish) code.
+
+\todo{Code}
+
+Since the $\lambda$-Calculus is the mathematical foundation of several functional
+programming languages, the features (without polymorphism) can be translated
+into them. Let us review the stated features in a pure functional language
+like Haskell:
+
+\todo{Code}
