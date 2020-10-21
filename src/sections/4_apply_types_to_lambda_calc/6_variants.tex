@@ -1,0 +1,112 @@
+\subsection{Sums and Variants}
+
+Many programs need to tackle variants. This means
+that we can sum together multiple shapes of a type into a summary
+type. Such variants are \textit{algebraic data types} and are often used in functional
+languages with pattern matching. One can compare them vaguely to \textit{Enums} of
+object-oriented languages like C\#.
+This paper will use the generalized definition
+of the variant to describe the principle. So instead of a sum type \texttt{T + T}
+we use the labeled variant type $\langle l_1 \colon \texttt{T}_1, l_2 \colon \texttt{T}_2 \rangle$.
+The sum type could be compared to Haskells \textit{Either} type, which can be
+either type ``a'' or ``b''.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | <l=t> as T : tagging
+    | case t of <$l_i=x_i$> $\Rightarrow t_i^{i \in 1..n}$ : case
+\end{bnfgrammar}\leavevmode\newline
+This syntax allows generalized labeled variants of types.
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | <$l_i \colon T_i^{i \in 1..n}$> : type of variants
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Case variant}
+    \begin{split}
+        \texttt{case} (\text{<}l_j=v_j\text{>} \texttt{ as } \texttt{T}) \texttt{ of } \text{<}l_i=x_i\text{>} \Rightarrow t_i^{i \in 1..n} \\
+        \rightarrow [x_j \mapsto v_j]t_j
+    \end{split}
+\end{equation*}
+``Check the variant with a \texttt{case variant} syntax and return
+the given term to the righthand side of the arrow. Replace the
+x variable in the term with the ascribed type''.
+
+\begin{equation*}
+    \tag{Case}
+    \infer{
+        \begin{split}
+            \texttt{case } t_0 \texttt{ of } \text{<}l_i=x_i\text{>} \Rightarrow t_i^{i \in 1..n} \\
+            \rightarrow \texttt{case } t'_0 \texttt{ of } \text{<}l_i=x_i\text{>} \Rightarrow t_i^{i \in 1..n}
+        \end{split}
+    }{
+        t_0 \rightarrow t'_0
+    }
+\end{equation*}
+``If there is a step from $t_0$ to $t'_0$, evaluate the term
+in the case clause before applying any mappings''.
+
+\begin{equation*}
+    \tag{Variant}
+    \infer{
+        \text{<}l_i=t_i\text{>} \texttt{ as T } \rightarrow \text{<}l_i=t'_i\text{>} \texttt{ as T }
+    }{
+        t_i \rightarrow t'_i
+    }
+\end{equation*}
+``If there is a step from $t_i$ to $t'_i$, evaluate the term
+in the variant''.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Variant}
+    \infer{
+    \Gamma \vdash \text{<}l_j=t_j\text{>} \texttt{ as } \text{<}l_i \colon T_i^{i \in 1..n}\text{>} \colon \text{<}l_i \colon T_i^{i \in 1..n}\text{>}
+    }{
+    \Gamma \vdash t_j \colon \texttt{T}_j
+    }
+\end{equation*}
+``When the type of $t_j$ is in the type environment, add the labeled
+variant types in the environment as well with their corresponding labels and
+term types''.
+
+\begin{equation*}
+    \tag{Case}
+    \infer{
+    \Gamma \vdash \texttt{case } t_0 \texttt{ of } \text{<}l_i=x_i\text{>} \Rightarrow t_i^{i \in 1..n} \colon \texttt{T}
+    }{
+    \begin{split}
+        \Gamma \vdash t_0 \colon \text{<}l_i \colon \texttt{T}_i^{i \in 1..n}\text{>} \\
+        \text{for each } i \text{    } \Gamma, x_i \colon \texttt{T}_i \vdash t_i \colon T
+    \end{split}
+    }
+\end{equation*}
+``If $t_0$ is a variant with $i$ labels (and therefore variants), the `case of' syntax
+will return the specific type of the variant instead of the summary type''.
+
+With the variant types in place, our language could now type-check and interpret
+the following lines of code (given in the Haskell syntax for readability):
+
+\begin{minted}{Haskell}
+    data StringOrInt = MyString String | MyInt Int
+    getStringValue :: StringOrInt -> String
+    getStringValue value = case value of
+        MyString s -> s
+        MyInt i -> show i
+\end{minted}
+
+Variants are often used to represent variable return values.
+One can think of the ``Option'' type in F\# or the ``Maybe'' type
+of Haskell. Both define two variants of a result, namely ``Some'' (``Just'')
+or ``None'' (``Nothing''). A computation that may have a none result can return
+this type constructor of the variant and can signal an empty or faulty result.
+A typical use-case could be number parsing. When one wants to parse the string
+\texttt{"12"} into a number, the result in Haskell could be \texttt{"Just 12"}, but
+on the other hand parsing \texttt{"12i"} would result in a \texttt{"Nothing"}.

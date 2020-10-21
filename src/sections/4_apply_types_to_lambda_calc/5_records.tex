@@ -1,0 +1,91 @@
+\subsection{Records}
+
+Since tuples have indices and must be accessed that way, we may want to
+name the elements in a tuple. ``Records'' provide a way to label entries
+of a tuple and create a possibility to semantically group terms together.
+One could loosely compare them with \texttt{Structs} from programming
+languages like \texttt{GoLang}.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | $\{l_i = t_i^{i \in 1..n}\}$ : record
+    | t.l : projection
+\end{bnfgrammar}\leavevmode\newline
+This syntax rule follows the same principle as for the tuple. One change to
+note is, that the projection is not done via an index but with a label $l$.
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | \dots
+    | $\{l_i = v_i^{i \in 1..n}\}$ : record value
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | $\{l_i \colon T_i^{i \in 1..n}\}$ : tuple of records
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Record projection}
+    \{l_i = v_i^{i \in 1..n}\} . l_j \rightarrow v_j
+\end{equation*}
+``When the projection with label $j$ is applied to a record with
+$i$ values, return the value with the label $j$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+        t_1 . l \rightarrow t'_1 . l
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before executing the projection''.
+
+\begin{equation*}
+    \tag{Record}
+    \infer{
+        \begin{split}
+            \{l_i = v_i^{i \in 1..j-1}, l_j = t_j, l_k = t_k^{k \in j+1..n}\} \\
+            \rightarrow \{l_i = v_i^{i \in 1..j-1}, l_j = t'_j, l_k = t_k^{k \in j+1..n}\}
+        \end{split}
+    }{
+        t_j \rightarrow t'_j
+    }
+\end{equation*}
+``If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
+term $l_j = t_j$ to $l_j = t'_j$ that is not a value''. This inforces
+the same evaluation rules on records as the above rules did on tuples.
+In other terms:
+$\{\text{foo}=t_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=v_2\}$.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Record}
+    \infer{
+    \Gamma \vdash \{l_i = t_i^{i \in 1..n}\} \colon \{l_i \colon \texttt{T}_i^{i \in 1..n}\}
+    }{
+    \text{for each } i & \Gamma \vdash t_i \colon \texttt{T}_i
+    }
+\end{equation*}
+``For each element in the record with label $l$, we calculate the type
+and add the whole record to the typing context $\Gamma$ in the form
+$\{l_1 \colon T_1, l_2 \colon T_2, \dots\}$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+    \Gamma \vdash t_i . l_j \colon \texttt{T}_j
+    }{
+    \Gamma \vdash t_1 \colon \{l_i \colon \texttt{T}_i^{i \in 1..n}\}
+    }
+\end{equation*}
+``If the term $t_1$ is a record type with $i$ entries, the projection
+$t_1 . l_j$ will yield an element of the type $\texttt{T}_j$ at
+the position of label $l_j$''.

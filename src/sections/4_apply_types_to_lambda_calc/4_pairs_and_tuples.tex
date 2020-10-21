@@ -1,0 +1,92 @@
+\subsection{Pairs and Tuples}
+
+Until now, the additions were minor and added some syntactic sugar to the language of
+the simple typed $\lambda$-Calculus. The following simple extensions will enrich
+the language with features that are often found in programming languages.
+
+Pairs - and their more general counterpart Tuples - are a construct to group
+values and terms together. Pairs are product types of exactly two values
+and therefore have slightly different evaluation rules. Tuples are the general way
+of pairs and therefore only the rules of tuples will be explained since they include
+the rules of pairs as well.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | $\{t_i^{i \in 1..n}\}$ : tuple
+    | t.i : projection
+\end{bnfgrammar}\leavevmode\newline
+$\{t_i^{i \in 1..n}\}$ means that for example with $i=3$ we have a tuple
+of three elements. A tuple with $i=2$ would be a pair.
+$\{t_i^{i \in 1..n}\} \text{ with } i=3 \mapsto \{t_1, t_2, t_3\}$.
+The projection is needed to access the elements in a tuple at the given index.
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | \dots
+    | $\{v_i^{i \in 1..n}\}$ : tuple value
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | $\{T_i^{i \in 1..n}\}$ : tuple type
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Tuple projection}
+    \{v_i^{i \in 1..n}\} . j \rightarrow v_j
+\end{equation*}
+``When the projection with index $j$ is applied to a tuple with
+$i$ values, return the value at index $j$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+        t_1 . i \rightarrow t'_1 . i
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before executing the projection''.
+
+\begin{equation*}
+    \tag{Tuple}
+    \infer{
+    \{v_i^{i \in 1..j-1}, t_j, t_k^{k \in j+1..n}\} \rightarrow \{v_i^{i \in 1..j-1}, t'_j, t_k^{k \in j+1..n}\}
+    }{
+    t_j \rightarrow t'_j
+    }
+\end{equation*}
+``If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
+term $t_j$ to $t'_j$ that is not a value''. This forces the tuple to
+be fully evaluated before any projections can be executed on the tuple.
+Also, it enforces the evaluation direction for the tuple from left to write.
+In other terms: $\{t_1, t_2\} \mapsto \{v_1, t_2\} \mapsto \{v_1, v_2\}$.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Tuple}
+    \infer{
+    \Gamma \vdash \{t_i^{i \in 1..n}\} \colon \{\texttt{T}_i^{i \in 1..n}\}
+    }{
+    \text{for each } i & \Gamma \vdash t_i \colon \texttt{T}_i
+    }
+\end{equation*}
+``For each element in the tuple with index $i$, we calculate the type
+and add the whole tuple to the typing context $\Gamma$ in the form $\{T_1, T_2, \dots\}$''.
+
+\begin{equation*}
+    \tag{Projection}
+    \infer{
+    \Gamma \vdash t_i . j \colon \texttt{T}_j
+    }{
+    \Gamma \vdash t_1 \colon \{\texttt{T}_i^{i \in 1..n}\}
+    }
+\end{equation*}
+``If the term $t_1$ is a tuple type with $i$ entries, the projection
+$t_1 . j$ will yield an element of the type $\texttt{T}_j$''.

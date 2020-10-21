@@ -1,0 +1,46 @@
+\subsection{Ascription}
+
+A very handy tool for our simple programming language is the usage of ascription.
+It is often used for ``documentation'' purposes \cite{pierce2002ProgLang}. It defines
+a way to substitute long type names with shorter ones. An example for such a substitute
+in the Haskell language would be: ``\texttt{type MyType = Double -> Double -> [Char]}''
+which defines the type \texttt{MyType} as a function that takes a double and a double
+and returns an array of characters.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | t as T : ascription
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Ascribe Value}
+    v_1 \text{ as } \texttt{T} \rightarrow v_1
+\end{equation*}
+``The term $v_1 \text{ as } \texttt{T}$ returns $v_1$''.
+
+\begin{equation*}
+    \tag{Ascription Evaluation}
+    \infer{
+        t_1 \text{ as } \texttt{T} \rightarrow t'_1 \text{ as } \texttt{T}
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax''.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Ascribe}
+    \infer{
+        \Gamma \vdash t_1 \text{ as } \texttt{T} \colon \texttt{T}
+    }{
+        \Gamma \vdash t_1 \colon \texttt{T}
+    }
+\end{equation*}
+``If $t_1$ is assumed with the type \texttt{T} in the context,
+the term $t_1 \text{ as } \texttt{T}$ will yield a type \texttt{T}''.

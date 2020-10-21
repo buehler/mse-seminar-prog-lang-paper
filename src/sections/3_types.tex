@@ -1,5 +1,7 @@
 \section{Types and Simple Types}
 
+\epigraph{Well-typed programs cannot ``go wrong.''}{Robin Milner (1978)}
+
 To get one step closer towards the goal of having a
 simply typed $\lambda$-Calculus we need to define
 what a type is.
@@ -79,13 +81,6 @@ defines that the input for the ``\texttt{if}'' must be a boolean value and the r
 of type \texttt{T}. Both branches of the condition must have the same type.
 
 \subsubsection{Typesafety}
-
-\begin{quotation}
-    Well-typed programs cannot ``go wrong.''
-    \begin{flushright}
-        -- Robin Milner (1978)
-    \end{flushright}
-\end{quotation}
 
 The given typing rules give our typing system a pretty important property:
 \textit{safety} (or \textit{soundness}) \cite{pierce2002ProgLang}.
@@ -237,6 +232,6 @@ Translated into a programming language:
     // number => string (Abstraction)
     const f = nr => nr.toString()
 
-    // string (Application)
+    // number that becomes a string (Application)
     const r = f(x)
 \end{minted}

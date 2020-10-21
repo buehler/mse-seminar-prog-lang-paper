@@ -1,0 +1,75 @@
+\subsection{Unit Type}
+
+The \texttt{unit} type represents a useful type often found in functional
+programming languages like Haskell or F\#. It is used to ``throw away'' a
+computation result and combine multiple computations together \cite{pierce2002ProgLang}.
+In Haskell this can be used in the \texttt{main} function to glue
+several functions together that contain side effects. It can be viewed as
+the ``\texttt{void}'' type in C\# or Java \cite{pierce2002ProgLang}.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | unit : constant unit
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    v ::= : values$\colon$
+    | \dots
+    | unit : constant unit
+\end{bnfgrammar}\leavevmode\newline
+
+\begin{bnfgrammar}
+    T ::= : types$\colon$
+    | \dots
+    | Unit : unit type
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Unit}
+    \Gamma \vdash \texttt{unit} \colon \texttt{Unit}
+\end{equation*}\leavevmode\newline
+
+Added derived form \cite{pierce2002ProgLang}:
+\begin{equation*}
+    t_1 ; t_2 \quad \defeq \quad (\lambda x \colon \texttt{Unit} . t_2) t_1 \text{ where } x \notin FV(t_2)
+\end{equation*}
+``The function is applied to the term $t_1$ where the input variable $x$ is not
+part of the ``free variables''\footnote{Free variables are not bound variables in the term.}
+(FV) of the term $t_2$''.
+
+~\\
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Sequence}
+    \infer{
+        t_1 ; t_2 \rightarrow t'_1 ; t_2
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a sequence (noted by `;') and there is a step from $t_1$ to
+$t'_1$, evaluate the term $t_1$''.
+
+\begin{equation*}
+    \tag{Sequence Next}
+    \texttt{unit} ; t_2 \rightarrow t_2
+\end{equation*}
+``If the lefthand side of a sequence is reduced to \texttt{unit},
+return the result of $t_2$''.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Sequence}
+    \infer{
+        \Gamma \vdash t_1 ; t_2 \colon \texttt{T}_2
+    }{
+        \Gamma \vdash t_1 \colon \texttt{Unit} & \Gamma \vdash t_2 \colon \texttt{T}_2
+    }
+\end{equation*}
+``If $t_1$ is of type \texttt{Unit} and $t_2$ has a type $\texttt{T}_2$ then
+the resulting type of the sequence will be $\texttt{T}_2$''.

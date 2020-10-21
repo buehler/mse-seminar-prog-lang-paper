@@ -1,20 +1,24 @@
 \section{Introduction}
 
-% \begin{quote}
-%     Well-typed programs cannot ``go wrong''.
-% \end{quote}
+\epigraph{
+    The road from untyped to typed universes has been followed many times,
+    in many different fields, and largely for the same reasons.
+}
+{Luca Cardelli and Peter Wegner (1985)}
 
 All modern programming languages have type systems.
 They are either of a more dynamic nature - like JavaScript -
 or statically typed like C\#. Functional languages like Haskell have
 an even stricter form of a type system. They all have one thing in
 common: They aid the developer to create programs, without the
-constant fear about runtime errors.
+constant fear of runtime errors.
 
 This paper shall give the reader an idea of the steps that
 are needed to create a type system and how it is applied to
-an untyped language. This paper will use JavaScript and TypeScript\footnote{\url{https://www.typescriptlang.org/}}
-as examples for certain comparisons.
+an untyped language. This paper will use JavaScript - ish,
+TypeScript\footnote{\url{https://www.typescriptlang.org/}} - ish
+and Haskell\footnote{\url{https://www.haskell.org/}}
+syntax as examples for certain comparisons.
 Of course, JavaScript is not an untyped language, but
 it does not have a strict static type analysis which can lead
 to runtime errors during interpretation and execution of the code.
@@ -32,7 +36,7 @@ the following code statements:
     foo - bar // NaN (Not a Number)
 \end{minted}
 
-As humans, we immediately understand that this statement
+As humans and software developers, we understand that this statement
 is not going to terminate well - assuming we have an untyped
 language. Strings and numbers are not
 of the same type and cannot be added together. To determine
@@ -51,3 +55,5 @@ The following sections will describe the basics of the
 $\lambda$-Calculus, what ``types'' and ``simple types'' are
 and how they can be applied to the $\lambda$-Calculus to
 achieve the ``simply typed $\lambda$-Calculus''.
+
+\todo{what, why, result (olaf zimmermann)}

@@ -6,6 +6,7 @@
 \usepackage{simplebnf}
 \usepackage{proof}
 \usepackage{minted}
+\usepackage{epigraph}
 
 % tikz package might be used for drawing graphs if needed.
 \usepackage{tikz}
@@ -37,5 +38,13 @@
     xleftmargin=6.5ex,
     showstringspaces=false,
     tabsize=2,
-    morecomment=[l]{//}
+    morecomment=[l]{//},
+    mathescape
 }
+
+%%%%%%%%-----EPIGRAPH CONFIG
+
+\setlength{\beforeepigraphskip}{1.5\baselineskip}
+\setlength{\afterepigraphskip}{1.5\baselineskip}
+\setlength{\epigraphwidth}{.3\textwidth}
+\renewcommand{\epigraphsize}{\footnotesize}

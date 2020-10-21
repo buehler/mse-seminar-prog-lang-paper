@@ -1,0 +1,110 @@
+\subsection{General Recursion}
+
+This section focuses on general recursion. In the untyped $\lambda$-Calculus,
+general recursion can be solved by a fixed-point combinator
+which ``unrolls'' the recursion of a function \cite{pierce2002ProgLang}.
+
+For the sake of completeness, the formal definition of the fix combinator is stated below:
+\todo{Ref to simons paper (hopefully he has the general recursion covered)}
+
+\begin{equation*}
+    \tag{Fixed-Point Combinator}
+    \lambda f. (\lambda x. f (\lambda y. x x y)) (\lambda x. f (\lambda y. x x y))
+\end{equation*}
+
+To understand the impact of this fix combinator in the typed universe, let
+us analyze the factorial equation:
+
+\begin{equation*}
+    \tag{Recursive Factorial}
+    f(x) =
+    \begin{cases}
+        1          & \text{for } x \in \{0,1\}                      \\
+        x * f(x-1) & \text{for } x \in \mathbb{N} \setminus \{0,1\}
+    \end{cases}
+\end{equation*}
+
+This definition translated into an untyped $\lambda$-Calculus syntax
+would be \cite{pierce2002ProgLang}:
+
+\begin{lstlisting}
+factorial = $\lambda$n.
+            if n = 0 then 1
+            else n * factorial(n-1)
+\end{lstlisting}
+
+With this definition at hand, the fix operator can now unroll the recursion
+and create a function that does those ``if'' comparisons until the
+termination point is reached. So in general, the ``fix'' operator
+takes a recursive function (generator) and creates a fixed point function, that unrolls
+the function calls to itself until the end is reached.
+The resulting function states as follows \cite{pierce2002ProgLang}:
+
+\begin{lstlisting}
+if n=0 then 1
+else n * (if (n-1)=0 then 1
+          else (n-1) * (if (n-2)=0 then 1
+                        else ...))
+\end{lstlisting}
+
+The given \texttt{fix} function has a big problem in our narrowed down universe
+of ``simple types''. Since the function is able to create an endless recursion,
+it is not valid in our context. All functions must eventually terminate to adhere
+to the given rules of a typed system. Now, the only applicable solution for
+now\footnote{As long as we only have ``simple types''.} is to define \texttt{fix}
+as a primitive in the language and use typing rules to mimic the behavior
+\cite{pierce2002ProgLang}.
+
+Addition to the syntax \cite{pierce2002ProgLang}:
+\begin{bnfgrammar}
+    t ::= : terms$\colon$
+    | \dots
+    | fix t : fixed point of t
+\end{bnfgrammar}\leavevmode\newline
+
+Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Fix Beta Reduction}
+    \texttt{fix } (\lambda x \colon \texttt{T}_1 . t_2)
+    \rightarrow
+    [x \mapsto (\texttt{fix } (\lambda x \colon \texttt{T}_1 . t_2 ))]t_2
+\end{equation*}
+``When applying the \texttt{fix} function to a given term $t_2$,
+replace all occurrences of the bound variable ($x$) with the
+term itself''.
+
+\begin{equation*}
+    \tag{Fix}
+    \infer{
+        \texttt{fix } t_1 \rightarrow \texttt{fix } t'_1
+    }{
+        t_1 \rightarrow t'_1
+    }
+\end{equation*}
+``If there is a step from $t_1$ to $t'_1$, evaluate the term
+before applying the \texttt{fix} function to it''.
+
+~\\
+Addition to the typing rules \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \tag{Variant}
+    \infer{
+        \Gamma \vdash \texttt{fix } t_1 \colon \texttt{T}_1
+    }{
+        \Gamma \vdash t_1 \colon \texttt{T}_1 \rightarrow \texttt{T}_1
+    }
+\end{equation*}
+``If the type of $t_1$ is in the context and has a function type
+$\texttt{T} \rightarrow \texttt{T}$, then the application of
+\texttt{fix} to $t_1$ will yield the type $\texttt{T}_1$''.
+
+~\\
+Added derived form \cite{pierce2002ProgLang}:
+\begin{equation*}
+    \begin{split}
+        \texttt{letrec } x \colon \texttt{T}_1 = t_1 \texttt{ in } t_2 \\
+        \defeq \quad \texttt{let } x = \texttt{fix } (\lambda x \colon \texttt{T}_1 . t_1) \texttt{ in } t_2
+    \end{split}
+\end{equation*}
+``Define the form $\texttt{letrec} \dots$ as a let binding with the application of
+the \texttt{fix} function to the term in $t_2$''.
