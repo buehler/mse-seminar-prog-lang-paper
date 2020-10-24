@@ -1,0 +1,135 @@
+\section{Conclusion}
+
+With the application of simple types to the $\lambda$-Calculus
+and the addition of ``simple extensions'', the result of this paper
+is a form of the ``simply-typed $\lambda$-Calculus'' with extensions to
+the language and the type system to make a practical language. It shows
+the additions needed and the steps taken to add a type-system to an
+untyped language. It gives some insight into the very complex topic
+of type-systems and how they work and provides explanations for the
+various mathematical formulas and derivation trees. It should be
+noted that the result is not a fully-fledged programming language since
+subtyping and polymorphism is still missing which is a big part of
+modern languages. The simply-typed $\lambda$-Calculus however, is
+a good example for type-science since it is not too complex and
+can be extended quite easily.
+
+Below all described additions and extensions will be shown in
+TypeScript syntax as well as Haskell syntax to give a practical
+example of the created type-system. Not all elements are
+translateable 1:1.
+
+\subsection*{TypeScript}
+
+\begin{minted}{TypeScript}
+// Base Types
+const foo: string = 'bar';
+const nr: number = 42;
+
+// Function Types
+const f = () => console.log('');
+const fx = x => x * x;
+
+// Unit Type
+function f(): void {}
+
+// Sequencing
+console.log(42);
+console.log(1337);
+
+// Ascription
+const foo = 'something' as string;
+
+// Let Bindings
+let foo = (x, y) => x+y; // let
+const result = foo(1,2) // "in" ...
+
+// Pairs and Tuples
+const foo = [42, 'something', true];
+
+// Records
+const foo = {name: 'Max', lastname: 'Muster'};
+
+// Sums and Variants
+type MyVariant = string | number; // Union Type
+
+// General recursion
+const factorial = (n) => n <= 1
+    ? 1
+    : n * factorial(n-1)
+
+// Lists
+const arr: string[] = ['one', 'two', 'three'];
+
+// References
+let variable = 1;
+const f = () => variable = variable + 1;
+f();
+
+// Exceptions
+throw 'Something went wrong';
+\end{minted}
+
+\subsection*{Haskell}
+
+\begin{minted}{Haskell}
+-- Base Types
+foo = "string"
+nr = 42
+
+-- Function Types
+f x y = x + y
+
+-- Unit Type
+-- Zero element tuple
+empty = ()
+
+-- Sequencing
+main = do
+    a <- something
+    b <- something
+    return 0
+
+-- Ascription
+type MyType = Double * [Char]
+
+-- Let Bindings
+f x y =
+    let calc a b = a + b
+    in calc x y
+
+-- Pairs and Tuples
+pair = (1, 2)
+tuple = (1, 2, 3)
+
+-- Records
+data Person = Person
+    { name :: String
+    , lastname :: String
+    }
+
+-- Sums and Variants
+data Maybe a = Just a | Nothing
+data Weekdays = Monday
+    | Tuesday
+    | Wednesday
+    | Thursday
+    | Friday
+    | Saturday
+    | Sunday
+
+-- General recursion
+factorial 0 = 1
+factorial 1 = 1
+factorial n = n * (factorial n-1)
+
+-- Lists
+list = 1 :: 2 :: 3 :: []
+
+-- References
+-- Doable with Monads
+-- for example with the State-Monad
+
+// Exceptions
+error "Something went wrong"
+\end{minted}

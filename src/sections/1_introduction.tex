@@ -26,7 +26,18 @@ TypeScript is a superset of the JavaScript language which fills this
 gap and adds a static type analyzer as well as some sort of a compiler
 (i.e. transpiler) to the language.
 
-But why type systems are helpful and how they work
+The result will be a simple type-system, that can validate
+type-safety for a simply typed language. It does not include
+any variants of subtyping like polymorphism. The remainder
+of this paper will give further introduction into the topic,
+a brief overview over the $\lambda$-Calculus, an overview
+over the topic of ``types'' in general and the application
+of simple types to the untyped $\lambda$-Calculus to create the
+simply-typed $\lambda$-Calculus as well as a list of simple
+extensions to the simply-typed $\lambda$-Calculus which make
+the language more practical and useful.
+
+Why type systems are helpful and how they work
 is not a trivial question to be answered. Consider
 the following code statements:
 
@@ -50,10 +61,3 @@ languages and a brief understanding of the untyped
 $\lambda$-Calculus which is described in the first
 chapters of ``Types and Programming Languages'' by
 Benjamin C. Pierce \cite{pierce2002ProgLang}.
-
-The following sections will describe the basics of the
-$\lambda$-Calculus, what ``types'' and ``simple types'' are
-and how they can be applied to the $\lambda$-Calculus to
-achieve the ``simply typed $\lambda$-Calculus''.
-
-\todo{what, why, result (olaf zimmermann)}
