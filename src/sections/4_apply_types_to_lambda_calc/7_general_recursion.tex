@@ -55,14 +55,14 @@ now\footnote{As long as we only have ``simple types''.} is to define \texttt{fix
 as a primitive in the language and use typing rules to mimic the behavior
 \cite{pierce2002ProgLang}.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
     | fix t : fixed point of t
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Fix Beta Reduction}
     \texttt{fix } (\lambda x \colon \texttt{T}_1 . t_2)
@@ -84,8 +84,7 @@ term itself''.
 ``If there is a step from $t_1$ to $t'_1$, evaluate the term
 before applying the \texttt{fix} function to it''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Variant}
     \infer{
@@ -98,8 +97,7 @@ Addition to the typing rules \cite{pierce2002ProgLang}:
 $\texttt{T} \rightarrow \texttt{T}$, then the application of
 \texttt{fix} to $t_1$ will yield the type $\texttt{T}_1$''.
 
-~\\
-Added derived form \cite{pierce2002ProgLang}:
+\subsubsection{Added derived form \cite{pierce2002ProgLang}}
 \begin{equation*}
     \begin{split}
         \texttt{letrec } x \colon \texttt{T}_1 = t_1 \texttt{ in } t_2 \\

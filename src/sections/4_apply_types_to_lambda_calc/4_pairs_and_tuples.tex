@@ -10,7 +10,7 @@ and therefore have slightly different evaluation rules. Tuples are the general w
 of pairs and therefore only the rules of tuples will be explained since they include
 the rules of pairs as well.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
@@ -34,7 +34,7 @@ The projection is needed to access the elements in a tuple at the given index.
     | $\{T_i^{i \in 1..n}\}$ : tuple type
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Tuple projection}
     \{v_i^{i \in 1..n}\} . j \rightarrow v_j
@@ -67,8 +67,7 @@ be fully evaluated before any projections can be executed on the tuple.
 Also, it enforces the evaluation direction for the tuple from left to write.
 In other terms: $\{t_1, t_2\} \mapsto \{v_1, t_2\} \mapsto \{v_1, v_2\}$.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Tuple}
     \infer{

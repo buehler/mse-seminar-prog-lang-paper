@@ -7,8 +7,7 @@ In Haskell this can be used in the \texttt{main} function to glue
 several functions together that contain side effects. It can be viewed as
 the ``\texttt{void}'' type in C\# or Java \cite{pierce2002ProgLang}.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
-
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
@@ -27,13 +26,13 @@ Addition to the syntax \cite{pierce2002ProgLang}:
     | Unit : unit type
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Unit}
     \Gamma \vdash \texttt{unit} \colon \texttt{Unit}
 \end{equation*}\leavevmode\newline
 
-Added derived form \cite{pierce2002ProgLang}:
+\subsubsection{Added derived form \cite{pierce2002ProgLang}}
 \begin{equation*}
     t_1 ; t_2 \quad \defeq \quad (\lambda x \colon \texttt{Unit} . t_2) t_1 \text{ where } x \notin FV(t_2)
 \end{equation*}
@@ -41,8 +40,7 @@ Added derived form \cite{pierce2002ProgLang}:
 part of the ``free variables''\footnote{Free variables are not bound variables in the term.}
 (FV) of the term $t_2$''.
 
-~\\
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Sequence}
     \infer{
@@ -61,8 +59,7 @@ $t'_1$, evaluate the term $t_1$''.
 ``If the lefthand side of a sequence is reduced to \texttt{unit},
 return the result of $t_2$''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Sequence}
     \infer{

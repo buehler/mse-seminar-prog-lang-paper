@@ -11,7 +11,7 @@ In addition to the list definition itself some useful helper
 methods come along with it to make the list usable in a ``practical''
 way.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
@@ -35,7 +35,7 @@ Addition to the syntax \cite{pierce2002ProgLang}:
     | List T : type of lists
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Cons Left}
     \infer{
@@ -121,8 +121,7 @@ it returns the righthand element (the tail) of the list''.
 ``If there is a step from $t_1$ to $t'_1$ evaluate $t$ prior to applying
 the tail function to the term''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Nil}
     \Gamma \vdash \texttt{nil[T}_1\texttt{]} \colon \texttt{List T}_1

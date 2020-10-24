@@ -56,7 +56,7 @@ The basic operations of references are \cite{pierce2002ProgLang}:
     \item Dereferencation
 \end{itemize}
 
-Addition to the existing evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the existing evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Application 1}
     \infer{
@@ -87,8 +87,7 @@ not transition to $\mu'$. The additions extend the applications so that
 they \textit{must} take a store and return a new store at the end
 of the evaluation.
 
-~\\
-Addition to the existing typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the existing typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Nil}
     \Gamma \colorbox{lightgray}{$| \Sigma$} \vdash \texttt{unit} \colon \texttt{Unit}
@@ -126,7 +125,7 @@ Addition to the existing typing rules \cite{pierce2002ProgLang}:
 Now all existing rules are aware of typings that are not in the typing context
 $\Gamma$ but also look in the range of stores $\Sigma$ for a given type.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
@@ -160,7 +159,7 @@ Addition to the syntax \cite{pierce2002ProgLang}:
     | $\Sigma$, l $\colon$ T : location typing
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Ref Value}
     \infer{
@@ -240,8 +239,7 @@ performing the assignment''.
 is already a value $v_1$, evaluate the term $t_2$ before
 performing the assignment''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Location}
     \infer{

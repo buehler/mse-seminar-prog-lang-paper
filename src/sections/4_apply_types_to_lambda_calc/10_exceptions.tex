@@ -14,7 +14,7 @@ the language should be able to throw an exception.
 The following additions define the possibility to raise exceptions,
 as well as a way of handling them when they occur.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
@@ -22,7 +22,7 @@ Addition to the syntax \cite{pierce2002ProgLang}:
     | try t with t : handle exceptions
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Application Raise 1}
     (\texttt{raise } v_{11}) t_2 \rightarrow \texttt{raise } v_{11}
@@ -82,8 +82,7 @@ handler) and apply it to the value $v_{11}$''.
 ``If there is a step from $t_1$ to $t'_1$, evaluate the term
 before evaluating other elements like the error handler''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Exception}
     \infer{

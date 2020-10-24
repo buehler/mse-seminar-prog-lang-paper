@@ -6,7 +6,7 @@ of a tuple and create a possibility to semantically group terms together.
 One could loosely compare them with \texttt{Structs} from programming
 languages like \texttt{GoLang}.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
@@ -28,7 +28,7 @@ note is, that the projection is not done via an index but with a label $l$.
     | $\{l_i \colon T_i^{i \in 1..n}\}$ : tuple of records
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Record projection}
     \{l_i = v_i^{i \in 1..n}\} . l_j \rightarrow v_j
@@ -64,8 +64,7 @@ the same evaluation rules on records as the above rules did on tuples.
 In other terms:
 $\{\text{foo}=t_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=v_2\}$.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Record}
     \infer{

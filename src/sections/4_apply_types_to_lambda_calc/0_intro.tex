@@ -11,10 +11,9 @@ checker more useful and able to perform operations.
 
 The following sections will explain such extensions and how they are constructed.
 For the further reading, the rules of the ``pure simply typed $\lambda$-Calculus''
-are stated again \cite{pierce2002ProgLang}:
+are stated again \cite{pierce2002ProgLang}.
 
-~\\
-\textbf{Syntax}
+\subsubsection{Syntax}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | x : variable
@@ -38,7 +37,7 @@ are stated again \cite{pierce2002ProgLang}:
     | $\Gamma$, x$\colon$T : term variable binding
 \end{bnfgrammar}\leavevmode\newline
 
-\textbf{Evaluation}
+\subsubsection{Evaluation}
 \begin{equation*}
     \tag{Application 1}
     \infer{
@@ -71,8 +70,7 @@ the righthand side.
 ``Replace the variable $x$ with the value $v_2$ in the term $t_{12}$''. This represents
 the effective computation or application of the value to a term.
 
-~\\
-\textbf{Typing}
+\subsubsection{Typing}
 \begin{equation*}
     \tag{Variable}
     \infer{

@@ -7,14 +7,14 @@ in the Haskell language would be: ``\texttt{type MyType = Double -> Double -> [C
 which defines the type \texttt{MyType} as a function that takes a double and a double
 and returns an array of characters.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
     | t as T : ascription
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Ascribe Value}
     v_1 \text{ as } \texttt{T} \rightarrow v_1
@@ -32,8 +32,7 @@ Addition to the evaluation rules \cite{pierce2002ProgLang}:
 ``If there is a step from $t_1$ to $t'_1$, evaluate the step
 in the syntax''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Ascribe}
     \infer{

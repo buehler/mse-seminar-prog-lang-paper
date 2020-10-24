@@ -12,7 +12,7 @@ we use the labeled variant type $\langle l_1 \colon \texttt{T}_1, l_2 \colon \te
 The sum type could be compared to Haskells \textit{Either} type, which can be
 either type ``a'' or ``b''.
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
@@ -27,7 +27,7 @@ This syntax allows generalized labeled variants of types.
     | <$l_i \colon T_i^{i \in 1..n}$> : type of variants
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Case variant}
     \begin{split}
@@ -64,8 +64,7 @@ in the case clause before applying any mappings''.
 ``If there is a step from $t_i$ to $t'_i$, evaluate the term
 in the variant''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Variant}
     \infer{

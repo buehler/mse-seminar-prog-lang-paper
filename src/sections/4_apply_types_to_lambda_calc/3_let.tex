@@ -11,14 +11,14 @@ They are found in Haskell as well:
             result
 \end{minted}
 
-Addition to the syntax \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
     | let x=t in t : let binding
 \end{bnfgrammar}\leavevmode\newline
 
-Addition to the evaluation rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Let-Bind Value}
     \texttt{let } x=v_1 \texttt{ in } t_2 \rightarrow [x \mapsto v_1] t_2
@@ -36,8 +36,7 @@ Addition to the evaluation rules \cite{pierce2002ProgLang}:
 ``If there is a step from $t_1$ to $t'_1$, evaluate the step
 in the syntax before evaluating the let binding itself''.
 
-~\\
-Addition to the typing rules \cite{pierce2002ProgLang}:
+\subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Let}
     \infer{
