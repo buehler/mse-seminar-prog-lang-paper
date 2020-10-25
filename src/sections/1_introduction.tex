@@ -10,8 +10,8 @@ All modern programming languages have type systems.
 They are either of a more dynamic nature - like JavaScript -
 or statically typed like C\#. Functional languages like Haskell have
 an even stricter form of a type system. They all have one thing in
-common: They aid the developer to create programs, without the
-constant fear of runtime errors.
+common: They aid the developer to create programs, without 
+the constant fear of runtime errors.
 
 This paper shall give the reader an idea of the steps that
 are needed to create a type system and how it is applied to
@@ -47,10 +47,10 @@ the following code statements:
     foo - bar // NaN (Not a Number)
 \end{minted}
 
-As humans and software developers, we understand that this statement
+As software developers, we understand that this statement
 is not going to terminate well - assuming we have an untyped
 language. Strings and numbers are not
-of the same type and cannot be added together. To determine
+of the same type and cannot be subtracted from one another. To determine
 that this is not going to work, the computer needs to execute
 the statements one by one and will encounter a wrong state.
 A type system can prevent such errors and create a
