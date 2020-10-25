@@ -1,10 +1,10 @@
 \subsection{General Recursion}
 
-This section focuses on general recursion. In the untyped $\lambda$-Calculus,
-general recursion can be solved by a fixed-point combinator
+This section focuses on the general recursion. In the untyped $\lambda$-Calculus,
+a general recursion can be solved by a fixed-point combinator
 which ``unrolls'' the recursion of a function \cite{pierce2002ProgLang}.
 
-For the sake of completeness, the formal definition of the fix combinator is stated below:
+For the sake of completeness, the formal definition of the fixed combinator is stated below:
 \todo{Ref to simons paper (hopefully he has the general recursion covered)}
 
 \begin{equation*}
@@ -12,7 +12,7 @@ For the sake of completeness, the formal definition of the fix combinator is sta
     \lambda f. (\lambda x. f (\lambda y. x x y)) (\lambda x. f (\lambda y. x x y))
 \end{equation*}
 
-To understand the impact of this fix combinator in the typed universe, let
+To understand the impact of this \texttt{fix} combinator in the typed universe, let
 us analyze the factorial equation:
 
 \begin{equation*}
@@ -35,9 +35,9 @@ factorial = $\lambda$n.
 
 With this definition at hand, the fix operator can now unroll the recursion
 and create a function that does those ``if'' comparisons until the
-termination point is reached. So in general, the ``fix'' operator
-takes a recursive function (generator) and creates a fixed point function, that unrolls
-the function calls to itself until the end is reached.
+termination point is reached. In general, the ``fix'' operator
+takes a recursive function (generator) and creates a fixed point function that unrolls
+the function call to itself until the end is reached.
 The resulting function states as follows \cite{pierce2002ProgLang}:
 
 \begin{lstlisting}
@@ -104,5 +104,5 @@ $\texttt{T} \rightarrow \texttt{T}$, then the application of
         \defeq \quad \texttt{let } x = \texttt{fix } (\lambda x \colon \texttt{T}_1 . t_1) \texttt{ in } t_2
     \end{split}
 \end{equation*}
-``Define the form $\texttt{letrec} \dots$ as a let binding with the application of
+``Define the form $\texttt{letrec} \dots$ as a `let binding' with the application of
 the \texttt{fix} function to the term in $t_2$''.

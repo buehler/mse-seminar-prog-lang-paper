@@ -3,7 +3,7 @@
 The \texttt{unit} type represents a useful type often found in functional
 programming languages like Haskell or F\#. It is used to ``throw away'' a
 computation result and combine multiple computations together \cite{pierce2002ProgLang}.
-In Haskell this can be used in the \texttt{main} function to glue
+In Haskell, this can be used in the \texttt{main} function to glue
 several functions together that contain side effects. It can be viewed as
 the ``\texttt{void}'' type in C\# or Java \cite{pierce2002ProgLang}.
 
@@ -56,7 +56,7 @@ $t'_1$, evaluate the term $t_1$''.
     \tag{Sequence Next}
     \texttt{unit} ; t_2 \rightarrow t_2
 \end{equation*}
-``If the lefthand side of a sequence is reduced to \texttt{unit},
+``If the left-hand side of a sequence is reduced to a \texttt{unit} value,
 return the result of $t_2$''.
 
 \subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
@@ -68,5 +68,5 @@ return the result of $t_2$''.
         \Gamma \vdash t_1 \colon \texttt{Unit} & \Gamma \vdash t_2 \colon \texttt{T}_2
     }
 \end{equation*}
-``If $t_1$ is of type \texttt{Unit} and $t_2$ has a type $\texttt{T}_2$ then
+``If $t_1$ is of type \texttt{Unit} and $t_2$ has type $\texttt{T}_2$, then
 the resulting type of the sequence will be $\texttt{T}_2$''.

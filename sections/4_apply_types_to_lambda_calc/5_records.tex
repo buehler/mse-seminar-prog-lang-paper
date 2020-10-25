@@ -1,7 +1,7 @@
 \subsection{Records}
 
 Since tuples have indices and must be accessed that way, we may want to
-name the elements in a tuple. ``Records'' provide a way to label entries
+name the elements in a tuple. ``Records'' provide a way to label the entries
 of a tuple and create a possibility to semantically group terms together.
 One could loosely compare them with \texttt{Structs} from programming
 languages like \texttt{GoLang}.
@@ -14,7 +14,7 @@ languages like \texttt{GoLang}.
     | t.l : projection
 \end{bnfgrammar}\leavevmode\newline
 This syntax rule follows the same principle as for the tuple. One change to
-note is, that the projection is not done via an index but with a label $l$.
+note is that the projection is not done via an index but with a label $l$.
 
 \begin{bnfgrammar}
     v ::= : values$\colon$
@@ -86,5 +86,5 @@ $\{l_1 \colon T_1, l_2 \colon T_2, \dots\}$''.
     }
 \end{equation*}
 ``If the term $t_1$ is a record type with $i$ entries, the projection
-$t_1 . l_j$ will yield an element of the type $\texttt{T}_j$ at
+$t_1 . l_j$ will yield an element of type $\texttt{T}_j$ at
 the position of label $l_j$''.

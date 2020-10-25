@@ -1,11 +1,11 @@
 \subsection{Exceptions}
 
-The last but not least addition (i.e. simple extension) to the
-simply typed $\lambda$-Calculus are exceptions. With the possibility
+The final addition (i.e., simple extension) to the
+simply typed $\lambda$-Calculus in this paper are exceptions. With the possibility
 of references and general recursive functions, the need of
-error handling arrises. Nearly all real-world programming languages
+error handling arises. Nearly all real-world programming languages
 have some way of signaling that the function in question is not able
-to carry out a given task \cite{pierce2002ProgLang}. In practical terms
+to carry out a given task \cite{pierce2002ProgLang}. In practical terms,
 this could be a division by zero. As seen in \ref{subsec:variants},
 a function could just return a variant that is either a result or
 some other variant of the type, but when something is truly exceptional,
@@ -27,16 +27,16 @@ as well as a way of handling them when they occur.
     \tag{Application Raise 1}
     (\texttt{raise } v_{11}) t_2 \rightarrow \texttt{raise } v_{11}
 \end{equation*}
-``If the lefthand side of an application does raise some error value,
-ignore the righthand side and raise the given error''.
+``If the left-hand side of an application does raise some error value,
+ignore the right-hand side and raise the given error''.
 
 \begin{equation*}
     \tag{Application Raise 2}
     v_1 (\texttt{raise } v_{21}) \rightarrow \texttt{raise } v_{21}
 \end{equation*}
-``If the lefthand side is reduced to a value and the righthand side does
-raise an error, raise that error''. This rule with the rule ``Raise 1''
-do guarantee that if either side of an application does raise an exception
+``If the left-hand side is reduced to a value and the right-hand side does
+raise an error, raise that error''. Those two rules guarantee that 
+if either side of an application does raise an exception,
 the error will take precedence over the other term and/or value.
 
 \begin{equation*}
@@ -91,7 +91,7 @@ before evaluating other elements like the error handler''.
         \Gamma \vdash t_1 \colon \texttt{T}_{exn}
     }
 \end{equation*}
-``If $t_1$ is a type that can be raised (i.e. it is
+``If $t_1$ is a type that can be raised (i.e., it is
 additional information to the error), then the whole
 expression can be given the type \texttt{T} since it may be required
 by the context''.
@@ -108,5 +108,5 @@ by the context''.
 \end{equation*}
 ``If the first term $t_1$ is of type \texttt{T} and the second
 term $t_2$ is an exception handler of type $\texttt{T}_{exn} \rightarrow \texttt{T}$,
-then the resulting type of the \texttt{try ... with ...} expression will
+then the resulting type of the `\texttt{try ... with ...}' expression will
 be of type \texttt{T}''.

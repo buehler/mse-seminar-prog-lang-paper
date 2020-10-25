@@ -1,13 +1,13 @@
 \subsection{References}
 
 Up until now, all previous extensions to the ``simply
-typed $\lambda$-Calculus'' were of a \textit{pure} nature \cite{pierce2002ProgLang}.
+typed $\lambda$-Calculus'' were of \textit{pure} nature \cite{pierce2002ProgLang}.
 When we consider imperative and object-oriented programming languages,
 most of them contain some mechanism to assign values to a variable.
 This can (and is) used to perform side effects in the execution
 of a function. Those side effects are often referred to as 
 ``computational effects'' \cite{pierce2002ProgLang}. Let the
-following lines of code inspire the idea behind side effects.
+following lines of code inspire the idea behind the side effects.
 
 \begin{minted}{TypeScript}
     let counter = 0;
@@ -24,7 +24,7 @@ following lines of code inspire the idea behind side effects.
 One of the substantial differences between pure functional programming
 languages and object-oriented ones is the ``referential transparency''
 which essentially states that given an input $x$, the function $f(x)$
-must yield the same result each time it is called with $x$. Basically
+must yield the same result each time it is called with $x$. In essence,
 one could replace the function with its result and does not change
 the result of the program. References are a way to introduce such
 desired side effects to programming languages like seen in the
@@ -32,20 +32,20 @@ code lines above.
 
 Note that most of the time the ``$=$'' sign is used for assigning values. It should be
 stated that instead of ``equals'' it should be regarded as ``becomes''.
-Because it is not mathematical equality but more an assignment
-to a label like the ``let bindings'' in \ref{subsec:let}.
+Because it is not a mathematical equality but more an assignment
+to a label like the ``let binding'' in \ref{subsec:let}.
 
 The program needs to keep track of those references and the stored values.
-For this we introduce stores with locations.
+For this, we introduce stores with locations.
 As one can imagine, the store contains the real value which is encoded
 in the binary format of the type. The set of store locations is named $\mathcal{L}$
 and the store itself is a partial function from locations $l$ to their values
 \cite{pierce2002ProgLang}. Another metavariable $\mu$ is used to range
 over stores. A reference is essentially a location in a store.
-To type the stores correctly another type context is added to the language
-with the symbol $\Sigma$. It contains the types of the locations in the store.
+To type the stores correctly, another type context is added to the language
+with the symbol $\Sigma$. It contains the types of locations in the store.
 
-Some of the basic application and abstraction rules that were stated in previous
+Some of the basic application and abstraction rules that were stated in the previous
 sections need to be adjusted to take stores into account.
 
 The basic operations of references are \cite{pierce2002ProgLang}:
@@ -80,9 +80,9 @@ The basic operations of references are \cite{pierce2002ProgLang}:
     (\lambda x \colon T_{11} . t_{12}) v_2 \colorbox{lightgray}{$| \mu$} \rightarrow [x \mapsto v_2] t_{12} \colorbox{lightgray}{$| \mu$}
 \end{equation*}
 
-The stated changes define that the application step contains
+The given changes define that the application step contains
 a starting and ending point for the stores $\mu$. The
-abstraction however does not change the store and therefore $\mu$ does
+abstraction, however, does not change the store and therefore $\mu$ does
 not transition to $\mu'$. The additions extend the applications so that
 they \textit{must} take a store and return a new store at the end
 of the evaluation.
@@ -181,7 +181,7 @@ retrieve the value from the store with the given location''.
     }
 \end{equation*}
 ``If there is a step from $t_1$ to $t'_1$ and therefore a step
-from the store $\mu$ to $\mu'$, evaluate those terms before
+from store $\mu$ to $\mu'$, evaluate those terms before
 performing the \texttt{ref} function''.
 
 \begin{equation*}
@@ -193,7 +193,7 @@ performing the \texttt{ref} function''.
     }
 \end{equation*}
 ``If the location $l$ is in the store $\mu$ and it yields the value $v$,
-the application of $!l$ to the store will yield the value $v$ with the
+the application of $!l$ to the store will yield the value $v$ and the
 same store since it is not manipulated''.
 
 \begin{equation*}
@@ -248,7 +248,7 @@ performing the assignment''.
         \Sigma(l) = \texttt{T}_1
     }
 \end{equation*}
-``If the stored typing of $l$ in the stored typings $\Sigma$ has
+``If the stored typing of $l$ in the stored typing $\Sigma$ has
 the type $\texttt{T}_1$, then $l$ has the type $\texttt{Ref T}_1$''.
 
 \begin{equation*}
@@ -271,7 +271,7 @@ of $\texttt{ref } t_1$ is $\texttt{Ref T}_1$''.
     }
 \end{equation*}
 ``If the stored typing of $t_1$ is a reference type $\texttt{Ref T}_{11}$,
-the `deref' \texttt{!t} will yield a type $\texttt{T}_{11}$''.
+the `deref' \texttt{!t} operation will yield a type $\texttt{T}_{11}$''.
 
 \begin{equation*}
     \tag{Assignment}
