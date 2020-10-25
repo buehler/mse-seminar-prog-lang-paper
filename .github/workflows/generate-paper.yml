@@ -15,12 +15,13 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
+          working_directory: src
           latexmk_shell_escape: true
           extra_system_packages: 'py-pygments'
       - uses: actions/upload-artifact@v2
         with:
           name: paper
-          path: main.pdf
+          path: src/main.pdf
   gh-pages:
     name: Publish pdf on gh-pages
     runs-on: ubuntu-latest
