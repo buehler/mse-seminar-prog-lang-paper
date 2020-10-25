@@ -17,13 +17,12 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
-          working_directory: src
           latexmk_shell_escape: true
           extra_system_packages: 'py-pygments'
       - uses: actions/upload-artifact@v2
         with:
           name: paper
-          path: src/main.pdf
+          path: main.pdf
   diff:
     name: Build and Upload Diff
     runs-on: ubuntu-latest
@@ -42,22 +41,22 @@ jobs:
           git archive --format=tar $TAG | (cd latexdiff-base && tar xf -)
       - name: Create LaTeX Diff
         run: |
-          cd latexdiff-base/src
-          latexdiff -V --flatten main.tex ../../src/main.tex > diff.tex
+          cd latexdiff-base
+          latexdiff -V --flatten main.tex ../../main.tex > diff.tex
           cd ../..
       - name: Copy latexmkrc file
-        run: cp src/.latexmkrc latexdiff-base/src/.latexmkrc
+        run: cp src/.latexmkrc latexdiff-base/.latexmkrc
       - name: Build LaTeX Diff document
         uses: xu-cheng/latex-action@v2
         with:
           root_file: diff.tex
-          working_directory: latexdiff-base/src
+          working_directory: latexdiff-base
           latexmk_shell_escape: true
           extra_system_packages: 'py-pygments'
       - uses: actions/upload-artifact@v2
         with:
           name: diff
-          path: latexdiff-base/src/diff.pdf
+          path: latexdiff-base/diff.pdf
   release:
     name: Create Release
     runs-on: ubuntu-latest
