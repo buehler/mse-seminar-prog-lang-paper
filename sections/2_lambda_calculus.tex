@@ -3,14 +3,14 @@
 A computer program can be described in various
 ways. One very famous variant is the ``turing machine''
 which was defined in a journal \cite{aturingMachine} by
-A. M. Turing in the year 1937. The turing machine
+A. M. Turing in the year 1937. The Turing machine
 is fed with instructions and contains a ``memory'' band
 to write down results for further computation.
 
 Another famous - but more abstract - method to describe
 a computation is the $\lambda$-Calculus. This system was
 specified by Alonzo Church \cite{churchLambda}. It is a mathematical
-model of a computation that only contains three rules
+model of computation that only contains three rules
 of operation \cite{pierce2002ProgLang}.
 Those three operations can be viewed in the following ``grammar'':
 
@@ -21,7 +21,7 @@ Those three operations can be viewed in the following ``grammar'':
     | t t : application
 \end{bnfgrammar}
 
-The untyped $\lambda$-Calculus is turing complete,
+The untyped $\lambda$-Calculus is Turing complete,
 which means it can compute \textit{any} program and
 therefore can run infinitely.
 In an untyped $\lambda$ system, it is possible to search
@@ -33,10 +33,8 @@ Since it is not desirable for computer programs to run to infinity,
 there has to be a way to split up computer programs into two categories:
 The ``useful'' and ``useless'' ones. Any program that will run forever
 or that will be stuck in an error state counts towards the ``useless'' ones.
-Other programs that have valid input and output will be counted to the ``useful''
+Other programs that have valid inputs and outputs will be counted towards ``useful''
 programs.
-
-\todo{reference to simons paper about the untyped calculus}
 
 For the further progress of this paper, it is necessary to recall
 the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002ProgLang}:

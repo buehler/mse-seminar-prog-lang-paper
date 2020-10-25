@@ -10,7 +10,7 @@ All modern programming languages have type systems.
 They are either of a more dynamic nature - like JavaScript -
 or statically typed like C\#. Functional languages like Haskell have
 an even stricter form of a type system. They all have one thing in
-common: They aid the developer to create programs, without 
+common: They aid the developer to create programs without 
 the constant fear of runtime errors.
 
 This paper shall give the reader an idea of the steps that
@@ -21,17 +21,17 @@ and Haskell\footnote{\url{https://www.haskell.org/}}
 syntax as examples for certain comparisons.
 Of course, JavaScript is not an untyped language, but
 it does not have a strict static type analysis which can lead
-to runtime errors during interpretation and execution of the code.
+to runtime errors during the interpretation and execution of the code.
 TypeScript is a superset of the JavaScript language which fills this
-gap and adds a static type analyzer as well as some sort of a compiler
-(i.e. transpiler) to the language.
+gap and adds a static type analyzer as well as a type of compiler
+(i.e., transpiler) to the language.
 
-The result will be a simple type-system, that can validate
-type-safety for a simply typed language. It does not include
+The result will be a simple type system, that can validate
+type safety for a simply typed language. It does not include
 any variants of subtyping like polymorphism. The remainder
 of this paper will give further introduction into the topic,
 a brief overview over the $\lambda$-Calculus, an overview
-over the topic of ``types'' in general and the application
+over the topic of ``types'' in general, and the application
 of simple types to the untyped $\lambda$-Calculus to create the
 simply-typed $\lambda$-Calculus as well as a list of simple
 extensions to the simply-typed $\lambda$-Calculus which make
@@ -39,7 +39,7 @@ the language more practical and useful.
 
 Why type systems are helpful and how they work
 is not a trivial question to be answered. Consider
-the following code statements:
+the following code statement:
 
 \begin{minted}{JavaScript}
     foo = "Hello World"
@@ -59,5 +59,5 @@ human-readable message when compiling such a program.
 The reader should have an understanding of programming
 languages and a brief understanding of the untyped
 $\lambda$-Calculus which is described in the first
-chapters of ``Types and Programming Languages'' by
+chapter of ``Types and Programming Languages'' by
 Benjamin C. Pierce \cite{pierce2002ProgLang}.

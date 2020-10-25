@@ -3,7 +3,7 @@
 \epigraph{Well-typed programs cannot ``go wrong.''}{Robin Milner (1978)}
 
 To get one step closer towards the goal of having a
-simply typed $\lambda$-Calculus we need to define
+simply typed $\lambda$-Calculus, we need to define
 what a type is.
 
 \subsection{Types}
@@ -12,7 +12,7 @@ A type is a classification of a value or multiple values.
 We typically use mathematical terms to describe a type and the relation
 of values to their types. When we say ``$x : T$'', we mean that
 ``x is of type T'', or in mathematical terms: ``$x \in T$'' \cite{pierce2002ProgLang}.
-This relation makes it possible to determine the type of any computation
+This relation makes it possible to determine the type of computation
 that correlates with x and can be \textit{statically} analyzed.
 For example:
 
@@ -23,7 +23,7 @@ For example:
     \end{cases}
 \end{equation*}
 
-We can determine the result type of \textit{f} without
+We can determine the resulting type of \textit{f} without
 \textit{running} the function. Shown in typescript syntax this could mean:
 
 \begin{minted}{TypeScript}
@@ -34,8 +34,8 @@ We can determine the result type of \textit{f} without
 \end{minted}
 
 With such a possibility, we can rule out stuck or meaningless programs.
-But how do we get there? We add the typing relation to
-the grammar and define, that terms and variables must have types:
+However, how do we get there? We add the typing relation to
+the grammar and define that terms and variables must have a type:
 
 \begin{bnfgrammar}
     t ::= : terms$\colon$
@@ -72,10 +72,10 @@ the rules that are given by the untyped $\lambda$-Calculus.
 
 \[\infer{ \text{iszero } t_1 \colon \texttt{Bool} }{ t_1 \colon \texttt{Nat} }\]
 
-This means, we allocate \texttt{true} and \texttt{false} to the \texttt{Bool} type.
+This means we allocate \texttt{true} and \texttt{false} to the \texttt{Bool} type.
 Then we assign \texttt{0} to the \texttt{Nat} type. 
-The derivation rules state that, all \texttt{succ} (successors) and \texttt{pred} predecessors are of the
-\texttt{Nat} type. The rules for the predecessor and successor define, that the result
+The derivation rules state that all \texttt{succ} (successors) and \texttt{pred} (predecessors) are of the
+\texttt{Nat} type. The rules for the predecessor and successor define that the result
 of the applied \texttt{succ} or \texttt{pred} function must be of type \texttt{Nat}. The rule for the condition
 defines that the input for the ``\texttt{if}'' must be a boolean value and the result is
 of type \texttt{T}. Both branches of the condition must have the same type.
@@ -85,9 +85,9 @@ of type \texttt{T}. Both branches of the condition must have the same type.
 The given typing rules give our typing system a pretty important property:
 \textit{safety} (or \textit{soundness}) \cite{pierce2002ProgLang}.
 In conjunction with the normalization property \cite{pierce2002ProgLang} \cite{baader_nipkow_1998},
-which eliminates the turing completeness in our system, we can guarantee that our programs
-that compile successfully with this type system won't ever go wrong. We can call
-such a program well-typed (i.e. it compiles according to the given typing rules \cite{cardelliTypeSystems}).
+which eliminates the Turing completeness in our system, we can guarantee that our programs
+that compile successfully with this type system will not ever go wrong. We can call
+such a program well-typed (i.e., it compiles according to the given typing rules \cite{cardelliTypeSystems}).
 
 This \textit{safety} is defined by two theorems \cite{pierce2002ProgLang}:
 \begin{itemize}
@@ -141,10 +141,10 @@ An incomplete list of such base types we will encounter is:
 \end{itemize}
 
 Since base types are unspectacular and are used to calculate other
-types, literature often substitutes them with a letter for all
+types, the literature often substitutes them with a letter for all
 \textit{unknown} base types \cite{pierce2002ProgLang}. Often,
-constructs like $\mathcal{A}$ or other letters are seen. For this
-paper we will establish the following syntactic form
+constructs like $\mathcal{A}$ or other letters are seen. In this
+paper, we will establish the following syntactic form
 from Benjamin C. Pierce \cite{pierce2002ProgLang}:
 
 \begin{bnfgrammar}
@@ -157,9 +157,9 @@ from Benjamin C. Pierce \cite{pierce2002ProgLang}:
 
 From a theoretical perspective, this language is quite interesting, but to be used
 as a programming language, it lacks some needed features. For example, we need the
-possibility to apply a function to some input to generate some output. Otherwise
+possibility to apply a function to some input to generate some output. Otherwise,
 this programming language will be quite boring. To add functions to our typing
-syntax we add the following line:
+syntax, we add the following line:
 
 \begin{bnfgrammar}
     T ::= : types$\colon$
@@ -169,8 +169,8 @@ syntax we add the following line:
 
 A \textit{type environment} ($\Gamma$) is introduced in the following derivation rules.
 This environment (or sometimes called \textit{type context}) is
-a set with variables and their types \cite{pierce2002ProgLang}.
-When our type-checker starts, the starting type environment equals
+a mathematical set with variables and their types \cite{pierce2002ProgLang}.
+When our type-checker starts, the starting environment equals
 ``$\varnothing$'' (the empty set). With each evaluation step, this set will grow
 and contain the specified values.
 
@@ -187,13 +187,13 @@ rules to ensure the types of functions can be calculated statically:
 \end{equation*}
 
 This typing rule for the general abstraction evaluation rule
-of the $\lambda$-Calculus \todo{ref to simons paper} adds
+of the $\lambda$-Calculus adds
 a premise to our system that translates to ``if $x$ is of
 type $T_1$ and is in our typing context $\Gamma$ and
 the term $t_2$ is of type $T_2$, then the abstraction
 $\lambda x \colon T_1 . t_2$ has the type $T_1 \rightarrow T_2$''.
 
-Also an additional typing rule for variables and applications
+Furthermore, an additional typing rule for variables and applications
 are needed:
 
 \begin{equation*}
@@ -218,8 +218,8 @@ are needed:
     }
 \end{equation*}
 
-``If $t_1$ is a function that takes a $T_{11}$ and returns a
-$T_{12}$ and the term $t_2$ is a value of type $T_{12}$ then
+``If $t_1$ is a function that takes $T_{11}$ and returns
+$T_{12}$ and the term $t_2$ is a value of type $T_{12}$, then
 the result of the application of $t_1$ to $t_2$ will
 be of type $T_{12}$''.
 \\[12pt]
