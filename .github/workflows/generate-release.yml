@@ -49,7 +49,7 @@ jobs:
       - name: Create LaTeX Diff
         run: |
           cd latexdiff-base/src
-          latexdiff -V --flatten main.tex ../../src/main.tex > diff.tex
+          latexdiff --config="PICTUREENV=(?:picture|DIFnomarkup|bnfgrammar)[\w\d*@]*" -V --flatten main.tex ../../src/main.tex > diff.tex
           cd ../..
       - name: Copy latexmkrc file
         run: cp src/.latexmkrc latexdiff-base/src/.latexmkrc
