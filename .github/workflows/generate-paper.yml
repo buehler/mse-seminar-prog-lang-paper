@@ -19,7 +19,7 @@ jobs:
           latexmk_shell_escape: true
           extra_system_packages: 'py-pygments'
       - name: Error Report
-        if: failed()
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
           name: main-error
