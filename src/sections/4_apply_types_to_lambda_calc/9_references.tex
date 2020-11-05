@@ -33,7 +33,7 @@ code lines above.
 Note that most of the time the ``$=$'' sign is used for assigning values. It should be
 stated that instead of ``equals'' it should be regarded as ``becomes''.
 Because it is not a mathematical equality but more an assignment
-to a label like the ``let binding'' in \ref{subsec:let}.
+to a label.
 
 The program needs to keep track of those references and the stored values.
 For this, we introduce stores with locations.
@@ -53,31 +53,31 @@ The basic operations of references are \cite{pierce2002ProgLang}:
 \begin{itemize}
     \item Assignment
     \item Allocation
-    \item Dereferencation
+    \item Dereferencing
 \end{itemize}
 
 \subsubsection{Addition to the existing evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Application 1}
     \infer{
-        t_1 t_2 \colorbox{lightgray}{$| \mu$} \rightarrow t'_1 t_2 \colorbox{lightgray}{$| \mu'$}
+        t_1\,t_2 \colorbox{lightgray}{$|\,\mu$} \rightarrow t'_1\,t_2 \colorbox{lightgray}{$|\,\mu'$}
     }{
-        t_1 \colorbox{lightgray}{$| \mu$} \rightarrow t'_1 \colorbox{lightgray}{$| \mu'$}
+        t_1 \colorbox{lightgray}{$|\,\mu$} \rightarrow t'_1 \colorbox{lightgray}{$|\,\mu'$}
     }
 \end{equation*}
 
 \begin{equation*}
     \tag{Application 2}
     \infer{
-        v_1 t_2 \colorbox{lightgray}{$| \mu$} \rightarrow v_1 t'_2 \colorbox{lightgray}{$| \mu'$}
+        v_1\,t_2 \colorbox{lightgray}{$|\,\mu$} \rightarrow v_1\,t'_2 \colorbox{lightgray}{$|\,\mu'$}
     }{
-        t_2 \colorbox{lightgray}{$| \mu$} \rightarrow t'_2 \colorbox{lightgray}{$| \mu'$}
+        t_2 \colorbox{lightgray}{$|\,\mu$} \rightarrow t'_2 \colorbox{lightgray}{$|\,\mu'$}
     }
 \end{equation*}
 
 \begin{equation*}
     \tag{Application Abstraction}
-    (\lambda x \colon T_{11} . t_{12}) v_2 \colorbox{lightgray}{$| \mu$} \rightarrow [x \mapsto v_2] t_{12} \colorbox{lightgray}{$| \mu$}
+    (\lambda x \colon T_{11} . t_{12})\,v_2 \colorbox{lightgray}{$|\,\mu$} \rightarrow [x \mapsto v_2] t_{12}\,\colorbox{lightgray}{$|\,\mu$}
 \end{equation*}
 
 The given changes define that the application step contains
@@ -90,13 +90,13 @@ of the evaluation.
 \subsubsection{Addition to the existing typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Nil}
-    \Gamma \colorbox{lightgray}{$| \Sigma$} \vdash \texttt{unit} \colon \texttt{Unit}
+    \Gamma \colorbox{lightgray}{$|\,\Sigma$} \vdash \texttt{unit} \colon \texttt{Unit}
 \end{equation*}
 
 \begin{equation*}
     \tag{Variable}
     \infer{
-        \Gamma \colorbox{lightgray}{$| \Sigma$} \vdash x \colon \texttt{T}
+        \Gamma \colorbox{lightgray}{$|\,\Sigma$} \vdash x \colon \texttt{T}
     }{
         x \colon \texttt{T} \in \Gamma
     }
@@ -105,25 +105,25 @@ of the evaluation.
 \begin{equation*}
     \tag{Application}
     \infer{
-        \Gamma \colorbox{lightgray}{$| \Sigma$} \vdash t_1 t_2 \colon \texttt{T}_{12}
+        \Gamma \colorbox{lightgray}{$|\,\Sigma$} \vdash t_1\,t_2 \colon \texttt{T}_{12}
     }{
-        \Gamma \colorbox{lightgray}{$| \Sigma$} \vdash t_1 \colon \texttt{T}_{11} \rightarrow \texttt{T}_{12}
+        \Gamma \colorbox{lightgray}{$|\,\Sigma$} \vdash t_1 \colon \texttt{T}_{11} \rightarrow \texttt{T}_{12}
         &
-        \Gamma \colorbox{lightgray}{$| \Sigma$} \vdash t_2 \colon \texttt{T}_{11}
+        \Gamma \colorbox{lightgray}{$|\,\Sigma$} \vdash t_2 \colon \texttt{T}_{11}
     }
 \end{equation*}
 
 \begin{equation*}
     \tag{Abstraction}
     \infer{
-        \Gamma \colorbox{lightgray}{$| \Sigma$} \vdash \lambda x \colon \texttt{T}_1 . t_2 \colon \texttt{T}_1 \rightarrow \texttt{T}_2
+        \Gamma \colorbox{lightgray}{$|\,\Sigma$} \vdash \lambda x \colon \texttt{T}_1 . t_2 \colon \texttt{T}_1 \rightarrow \texttt{T}_2
     }{
-        \Gamma,x \colon \texttt{T}_1 \colorbox{lightgray}{$| \Sigma$} \vdash t_2 \colon \texttt{T}_2
+        \Gamma,x \colon \texttt{T}_1 \colorbox{lightgray}{$|\,\Sigma$} \vdash t_2 \colon \texttt{T}_2
     }
 \end{equation*}
 
 Now all existing rules are aware of typings that are not in the typing context
-$\Gamma$ but also look in the range of stores $\Sigma$ for a given type.
+$\Gamma$ but also look in type environment of ``$\Sigma$'' for a given type.
 
 \subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
@@ -163,126 +163,126 @@ $\Gamma$ but also look in the range of stores $\Sigma$ for a given type.
 \begin{equation*}
     \tag{Ref Value}
     \infer{
-        \texttt{ref } v_1 | \mu \rightarrow l | (\mu, l \mapsto v_1)
+        \texttt{ref } v_1\,|\,\mu \rightarrow l\,|\,(\mu, l \mapsto v_1)
     }{
         l \notin dom(\mu)
     }
 \end{equation*}
-``If $l$ is not in the domain of $\mu$, the \texttt{ref} syntax of a
+If $l$ is not in the domain of $\mu$, the \texttt{ref} syntax of a
 value creates a new location in the store with a function to
-retrieve the value from the store with the given location''.
+retrieve the value from the store with the given location.
 
 \begin{equation*}
     \tag{Reference}
     \infer{
-        \texttt{ref } t_1 | \mu \rightarrow \texttt{ref } t'_1 | \mu'
+        \texttt{ref } t_1\,|\,\mu \rightarrow \texttt{ref } t'_1\,|\,\mu'
     }{
-        t_1 | \mu \rightarrow t'_1 | \mu'
+        t_1\,|\,\mu \rightarrow t'_1\,|\,\mu'
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$ and therefore a step
+If there is a step from $t_1$ to $t'_1$ and therefore a step
 from store $\mu$ to $\mu'$, evaluate those terms before
-performing the \texttt{ref} function''.
+performing the \texttt{ref} function.
 
 \begin{equation*}
     \tag{Dereference location}
     \infer{
-        !l | \mu \rightarrow v | \mu
+        !l\,|\,\mu \rightarrow v\,|\,\mu
     }{
         \mu(l) = v
     }
 \end{equation*}
-``If the location $l$ is in the store $\mu$ and it yields the value $v$,
+If the location $l$ is in the store $\mu$ and it yields the value $v$,
 the application of $!l$ to the store will yield the value $v$ and the
-same store since it is not manipulated''.
+same store since it is not manipulated.
 
 \begin{equation*}
     \tag{Dereference}
     \infer{
-        !t_1 | \mu \rightarrow !t'_1 | \mu'
+        !t_1\,|\,\mu \rightarrow !t'_1\,|\,\mu'
     }{
-        t_1 \mu \rightarrow t'_1 | \mu'
+        t_1\,|\,\mu \rightarrow t'_1\,|\,\mu'
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$ and therefore a step
+If there is a step from $t_1$ to $t'_1$ and therefore a step
 from the store $\mu$ to $\mu'$, evaluate the term before
-performing the de-referentation of the location''.
+performing the de-referentation of the location.
 
 \begin{equation*}
     \tag{Assignment}
-    l \colon = v_2 | \mu \rightarrow \texttt{unit } | [l \mapsto v_2] \mu
+    l \texttt{ := } v_2\,|\,\mu \rightarrow \texttt{unit }\,|\,[l \mapsto v_2]\,\mu
 \end{equation*}
-``The assignment of $l$ `becomes' $v_2$ will return a \texttt{unit} value
-and replaces $l$ in the store $\mu$ with the value $v_2$''.
+The assignment of $l$ `becomes' $v_2$ will return a \texttt{unit} value
+and replaces $l$ in the store $\mu$ with the value $v_2$.
 
 \begin{equation*}
     \tag{Assignment 1}
     \infer{
-        t_1 \colon = t_2 | \mu \rightarrow t'_1 \colon = t_2 | \mu'
+        t_1 \texttt{ := } t_2\,|\,\mu \rightarrow t'_1 \texttt{ := } t_2\,|\,\mu'
     }{
-        t_1 | \mu \rightarrow t'_1 \mu'
+        t_1\,|\,\mu \rightarrow t'_1\,|\,\mu'
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$ and therefore a step
+If there is a step from $t_1$ to $t'_1$ and therefore a step
 from the store $\mu$ to $\mu'$, evaluate the term $t_1$ before
-performing the assignment''.
+performing the assignment.
 
 \begin{equation*}
     \tag{Assignment 2}
     \infer{
-        v_1 \colon = t_2 | \mu \rightarrow v_1 \colon = t'_2 | \mu'
+        v_1 \texttt{ := } t_2\,|\,\mu \rightarrow v_1 \texttt{ := } t'_2\,|\,\mu'
     }{
-        t_2 | \mu \rightarrow t'_2 \mu'
+        t_2\,|\,\mu \rightarrow t'_2\,|\,\mu'
     }
 \end{equation*}
-``If there is a step from $t_2$ to $t'_2$ and the location
+If there is a step from $t_2$ to $t'_2$ and the location
 is already a value $v_1$, evaluate the term $t_2$ before
-performing the assignment''.
+performing the assignment.
 
 \subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Location}
     \infer{
-        \Gamma | \Sigma \vdash l \colon \texttt{Ref T}_1
+        \Gamma\,|\,\Sigma \vdash l \colon \texttt{Ref T}_1
     }{
         \Sigma(l) = \texttt{T}_1
     }
 \end{equation*}
-``If the stored typing of $l$ in the stored typing $\Sigma$ has
-the type $\texttt{T}_1$, then $l$ has the type $\texttt{Ref T}_1$''.
+If the stored typing of $l$ in the stored typing $\Sigma$ has
+the type $\texttt{T}_1$, then $l$ has the type $\texttt{Ref T}_1$.
 
 \begin{equation*}
     \tag{Reference}
     \infer{
-        \Gamma | \Sigma \vdash \texttt{ref } t_1 \colon \texttt{Ref T}_1
+        \Gamma\,|\,\Sigma \vdash \texttt{ref } t_1 \colon \texttt{Ref T}_1
     }{
-        \Gamma | \Sigma \vdash t_1 \colon \texttt{T}_1
+        \Gamma\,|\,\Sigma \vdash t_1 \colon \texttt{T}_1
     }
 \end{equation*}
-``If the stored typing of $t_1$ is $\texttt{T}_1$, then the resulting type
-of $\texttt{ref } t_1$ is $\texttt{Ref T}_1$''.
+If the stored typing of $t_1$ is $\texttt{T}_1$, then the resulting type
+of $\texttt{ref } t_1$ is $\texttt{Ref T}_1$.
 
 \begin{equation*}
     \tag{De-Reference}
     \infer{
-        \Gamma | \Sigma \vdash !t_1 \colon \texttt{T}_{11}
+        \Gamma\,|\,\Sigma \vdash !t_1 \colon \texttt{T}_{11}
     }{
-        \Gamma | \Sigma \vdash t_1 \colon \texttt{Ref T}_{11}
+        \Gamma\,|\,\Sigma \vdash t_1 \colon \texttt{Ref T}_{11}
     }
 \end{equation*}
-``If the stored typing of $t_1$ is a reference type $\texttt{Ref T}_{11}$,
-the `deref' \texttt{!t} operation will yield a type $\texttt{T}_{11}$''.
+If the stored typing of $t_1$ is a reference type $\texttt{Ref T}_{11}$,
+the `deref' \texttt{!t} operation will yield a type $\texttt{T}_{11}$.
 
 \begin{equation*}
     \tag{Assignment}
     \infer{
-        \Gamma | \Sigma \vdash t_1 \colon = t_2 \colon \texttt{Unit}
+        \Gamma\,|\,\Sigma \vdash t_1 \texttt{ := } t_2 \colon \texttt{Unit}
     }{
-        \Gamma | \Sigma \vdash t_1 \colon \texttt{Ref T}_{11}
+        \Gamma\,|\,\Sigma \vdash t_1 \colon \texttt{Ref T}_{11}
         &
-        \Gamma | \Sigma \vdash t_2 \colon \texttt{T}_{11}
+        \Gamma\,|\,\Sigma \vdash t_2 \colon \texttt{T}_{11}
     }
 \end{equation*}
-``If $t_1$ is a reference type of type $T_{11}$ and $t_2$ is a term
-with type $T_{11}$, then the assignment $t_1 \colon = t_2$ will
-yield a \texttt{Unit} type result''.
+If $t_1$ is a reference type of type $T_{11}$ and $t_2$ is a term
+with type $T_{11}$, then the assignment $t_1 \texttt{ := } t_2$ will
+yield a \texttt{Unit} type result.

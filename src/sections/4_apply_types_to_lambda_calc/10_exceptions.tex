@@ -27,15 +27,15 @@ as well as a way of handling them when they occur.
     \tag{Application Raise 1}
     (\texttt{raise } v_{11}) t_2 \rightarrow \texttt{raise } v_{11}
 \end{equation*}
-``If the left-hand side of an application does raise some error value,
-ignore the right-hand side and raise the given error''.
+If the left-hand side of an application does raise some error value,
+ignore the right-hand side and raise the given error.
 
 \begin{equation*}
     \tag{Application Raise 2}
     v_1 (\texttt{raise } v_{21}) \rightarrow \texttt{raise } v_{21}
 \end{equation*}
-``If the left-hand side is reduced to a value and the right-hand side does
-raise an error, raise that error''. Those two rules guarantee that 
+If the left-hand side is reduced to a value and the right-hand side does
+raise an error, raise that error. Those two rules guarantee that 
 if either side of an application does raise an exception,
 the error will take precedence over the other term and/or value.
 
@@ -47,29 +47,29 @@ the error will take precedence over the other term and/or value.
         t_1 \rightarrow t'_1
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$, evaluate the term
-before executing the \texttt{raise} application''.
+If there is a step from $t_1$ to $t'_1$, evaluate the term
+before executing the \texttt{raise} application.
 
 \begin{equation*}
     \tag{Re-Raise}
     \texttt{raise } (\texttt{raise } v_{11}) \rightarrow \texttt{raise } v_{11}
 \end{equation*}
-``If \texttt{raise} is applied to a term that raises a value itself, re-raise that
-value''.
+If \texttt{raise} is applied to a term that raises a value itself, re-raise that
+value.
 
 \begin{equation*}
     \tag{Try Value}
     \texttt{try } v_1 \texttt{ with } t_2 \rightarrow v_1
 \end{equation*}
-``If a term is evaluated to a value and no error is risen, return
-this value and ignore the term $t_2$''.
+If a term is evaluated to a value and no error is risen, return
+this value and ignore the term $t_2$.
 
 \begin{equation*}
     \tag{Try Error}
     \texttt{try } \texttt{raise } v_{11} \texttt{ with } t_2 \rightarrow t_2 v_{11}
 \end{equation*}
-``If a term is evaluated and raises an error, use the term $t_2$ (the exception
-handler) and apply it to the value $v_{11}$''.
+If a term is evaluated and raises an error, use the term $t_2$ (the exception
+handler) and apply it to the value $v_{11}$.
 
 \begin{equation*}
     \tag{Try}
@@ -79,8 +79,8 @@ handler) and apply it to the value $v_{11}$''.
         t_1 \rightarrow t'_1
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$, evaluate the term
-before evaluating other elements like the error handler''.
+If there is a step from $t_1$ to $t'_1$, evaluate the term
+before evaluating other elements like the error handler.
 
 \subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
@@ -91,10 +91,10 @@ before evaluating other elements like the error handler''.
         \Gamma \vdash t_1 \colon \texttt{T}_{exn}
     }
 \end{equation*}
-``If $t_1$ is a type that can be raised (i.e., it is
+If $t_1$ is a type that can be raised (i.e., it is
 additional information to the error), then the whole
 expression can be given the type \texttt{T} since it may be required
-by the context''.
+by the context.
 
 \begin{equation*}
     \tag{Try}
@@ -106,7 +106,7 @@ by the context''.
         \Gamma \vdash t_2 \colon \texttt{T}_{exn} \rightarrow \texttt{T}
     }
 \end{equation*}
-``If the first term $t_1$ is of type \texttt{T} and the second
+If the first term $t_1$ is of type \texttt{T} and the second
 term $t_2$ is an exception handler of type $\texttt{T}_{exn} \rightarrow \texttt{T}$,
 then the resulting type of the `\texttt{try ... with ...}' expression will
-be of type \texttt{T}''.
+be of type \texttt{T}.

@@ -42,25 +42,26 @@ are stated again \cite{pierce2002ProgLang}.
 \begin{equation*}
     \tag{Application 1}
     \infer{
-        t_1 t_2 \rightarrow t'_1 t_2
+        t_1\,t_2 \rightarrow t'_1\,t_2
     }{
         t_1 \rightarrow t'_1
     }
 \end{equation*}
-``If there exists an evaluation step from $t_1$ to $t'_1$, take this step
-prior to the evaluation step of $t_2$''. This forces the program to first
-evaluate all terms of $t_1$ until the next rule hits.
+If there exists an evaluation step from $t_1$ to $t'_1$, take this step
+prior to the evaluation step of $t_2$. Since there are no other applicable rules,
+this forces the program to first evaluate all terms of $t_1$ until other rules become
+applicable.
 
 \begin{equation*}
     \tag{Application 2}
     \infer{
-        v_1 t_2 \rightarrow v_1 t'_2
+        v_1\,t_2 \rightarrow v_1\,t'_2
     }{
         t_2 \rightarrow t'_2
     }
 \end{equation*}
-``If there exists an evaluation step from $t_2$ to $t'_2$ and the left
-side of the application is already a value, take this step''. This defines
+If there exists an evaluation step from $t_2$ to $t'_2$ and the left
+side of the application is already a value, take this step. This defines
 that when the left-hand side of the application is reduced to a value, evaluate
 the right-hand side.
 
@@ -68,7 +69,7 @@ the right-hand side.
     \tag{Application Abstraction}
     (\lambda x \colon T_{11} . t_{12}) v_2 \rightarrow [x \mapsto v_2] t_{12}
 \end{equation*}
-``Replace the variable $x$ with the value $v_2$ in the term $t_{12}$''. This represents
+Replace the variable $x$ with the value $v_2$ in the term $t_{12}$. This represents
 the effective computation or application of the value to a term.
 
 \subsubsection{Typing}
@@ -84,7 +85,7 @@ the effective computation or application of the value to a term.
 \begin{equation*}
     \tag{Application}
     \infer{
-        \Gamma \vdash t_1 t_2 \colon \texttt{T}_{12}
+        \Gamma \vdash t_1\,t_2 \colon \texttt{T}_{12}
     }{
         \Gamma \vdash t_1 \colon \texttt{T}_{11} \rightarrow \texttt{T}_{12}
         &

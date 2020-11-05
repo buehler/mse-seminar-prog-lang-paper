@@ -15,15 +15,15 @@ They are found in Haskell as well:
 \begin{bnfgrammar}
     t ::= : terms$\colon$
     | \dots
-    | let x=t in t : let binding
+    | let x = t in t : let binding
 \end{bnfgrammar}\leavevmode\newline
 
 \subsubsection{Addition to the evaluation rules \cite{pierce2002ProgLang}}
 \begin{equation*}
     \tag{Let-Bind Value}
-    \texttt{let } x=v_1 \texttt{ in } t_2 \rightarrow [x \mapsto v_1] t_2
+    \texttt{let } x = v_1 \texttt{ in } t_2 \rightarrow [x \mapsto v_1] t_2
 \end{equation*}
-``In the given abstraction $t_2$, replace all occurencies of $x$ with $v_1$''.
+In the given abstraction $t_2$, replace all occurencies of $x$ with $v_1$.
 
 \begin{equation*}
     \tag{Let}
@@ -33,8 +33,8 @@ They are found in Haskell as well:
         t_1 \rightarrow t'_1
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$, evaluate the step
-in the syntax before evaluating the let binding itself''.
+If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before evaluating the let binding itself.
 
 \subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
@@ -45,5 +45,5 @@ in the syntax before evaluating the let binding itself''.
         \Gamma \vdash t_1 \colon \texttt{T}_1 & \Gamma , x \colon \texttt{T}_1 \vdash t_2 \colon \texttt{T}_2
     }
 \end{equation*}
-``To calculate the type of the let binding, calculate the type of the bound term. The bound
-term will yield the same type as the used term for the binding''.
+To calculate the type of the let binding, calculate the type of the bound term. The bound
+term will yield the same type as the used term for the binding.

@@ -26,9 +26,11 @@ TypeScript is a superset of the JavaScript language which fills this
 gap and adds a static type analyzer as well as a type of compiler
 (i.e., transpiler) to the language.
 
-The result will be a simple type system, that can validate
-type safety for a simply typed language. It does not include
-any variants of subtyping like polymorphism. The remainder
+The result of the paper will be a simply typed programming language
+with simple extensions. The language will contain a simple type
+system that can statically analyse its language. Along the sections,
+the different rules and explanations for them are provided. 
+The paper does not include any variants of subtyping like polymorphism. The remainder
 of this paper will give further introduction into the topic,
 a brief overview over the $\lambda$-Calculus, an overview
 over the topic of ``types'' in general, and the application
@@ -48,7 +50,7 @@ the following code statement:
 \end{minted}
 
 As software developers, we understand that this statement
-is not going to terminate well - assuming we have an untyped
+is not going to create the desired output - assuming we have an untyped
 language. Strings and numbers are not
 of the same type and cannot be subtracted from one another. To determine
 that this is not going to work, the computer needs to execute

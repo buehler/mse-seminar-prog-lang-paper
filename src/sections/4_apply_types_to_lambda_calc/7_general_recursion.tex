@@ -4,15 +4,47 @@ This section focuses on the general recursion. In the untyped $\lambda$-Calculus
 a general recursion can be solved by a fixed-point combinator
 which ``unrolls'' the recursion of a function \cite{pierce2002ProgLang}.
 
-For the sake of completeness, the formal definition of the fixed combinator is stated below:
+This fixed-point combinator is further called ``\texttt{fix}''.
+
+For the sake of completeness, the formal definition of the fixed combinator
+is stated below \cite{pierce2002ProgLang}:
 \todo{Ref to simons paper (hopefully he has the general recursion covered)}
 
 \begin{equation*}
-    \tag{Fixed-Point Combinator}
-    \lambda f. (\lambda x. f (\lambda y. x x y)) (\lambda x. f (\lambda y. x x y))
+    \tag{Y combinator}
+    \lambda f.\,(\lambda x.\,f\,(x\,x))\,(\lambda x.\,f\,(x\,x))
 \end{equation*}
 
-To understand the impact of this \texttt{fix} combinator in the typed universe, let
+The given function is called the ``paradoxical Y combinator by Haskell B. Curry''.
+It is an implementation of such a \texttt{fix} combinator. The combinator
+returns a fixed point of a function if any exists by applying the function
+to itself. To give a better understanding of how this recursion works, the
+following lines should show the progress of the reduction of the fix combinator:
+
+\begin{equation*}
+    \begin{split}
+        Y\,g & = (\lambda f.\,(\lambda x.\,f\,(x\,x))\,(\lambda x.\,f\,(x\,x)))\,g \\
+        & = (\lambda x.\,g(x\,x))\,(\lambda x.\,g(x\,x)) \\
+        & = g((\lambda x.\,g(x\,x))\,(\lambda x.\,g(x\,x))) \\
+        & = g(Y\,g)
+    \end{split}
+\end{equation*}
+
+The Y combinator is ``solved'' by $\beta$-reduction and equality rules. When the equality
+is applied multiple times the following equation emerges:
+
+\begin{equation*}
+    Y\,g = g(Y\,g) = g(g(Y\,g)) = \dots
+\end{equation*}
+
+Given the terms of the language we constructed so far, the fix combinator could
+be defined as: \todo{get citation for this}
+
+\begin{equation*}
+    \texttt{fix } f = \texttt{let } x = f\,x \texttt{ in } x
+\end{equation*}
+
+To understand the impact of the \texttt{fix} combinator in the typed universe, let
 us analyze the factorial equation:
 
 \begin{equation*}
@@ -30,7 +62,7 @@ would be \cite{pierce2002ProgLang}:
 \begin{lstlisting}
 factorial = $\lambda$n.
             if n = 0 then 1
-            else n * factorial(n-1)
+            else n * factorial(pred(n))
 \end{lstlisting}
 
 With this definition at hand, the fix operator can now unroll the recursion
@@ -50,7 +82,7 @@ else n * (if (n-1)=0 then 1
 The given \texttt{fix} function has a big problem in our narrowed down universe
 of ``simple types''. Since the function is able to create an endless recursion,
 it is not valid in our context. All functions must eventually terminate to adhere
-to the given rules of a typed system. Now, the only applicable solution for
+to the given rules of a typed system. The only applicable solution for
 now\footnote{As long as we only have ``simple types''.} is to define \texttt{fix}
 as a primitive in the language and use typing rules to mimic the behavior
 \cite{pierce2002ProgLang}.
@@ -69,9 +101,9 @@ as a primitive in the language and use typing rules to mimic the behavior
     \rightarrow
     [x \mapsto (\texttt{fix } (\lambda x \colon \texttt{T}_1 . t_2 ))]t_2
 \end{equation*}
-``When applying the \texttt{fix} function to a given term $t_2$,
+When applying the \texttt{fix} function to a given term $t_2$,
 replace all occurrences of the bound variable ($x$) with the
-term itself''.
+term itself.
 
 \begin{equation*}
     \tag{Fix}
@@ -81,8 +113,8 @@ term itself''.
         t_1 \rightarrow t'_1
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$, evaluate the term
-before applying the \texttt{fix} function to it''.
+If there is a step from $t_1$ to $t'_1$, evaluate the term
+before applying the \texttt{fix} function to it.
 
 \subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
@@ -93,9 +125,9 @@ before applying the \texttt{fix} function to it''.
         \Gamma \vdash t_1 \colon \texttt{T}_1 \rightarrow \texttt{T}_1
     }
 \end{equation*}
-``If the type of $t_1$ is in the context and has a function type
+If the type of $t_1$ is in the context and has a function type
 $\texttt{T} \rightarrow \texttt{T}$, then the application of
-\texttt{fix} to $t_1$ will yield the type $\texttt{T}_1$''.
+\texttt{fix} to $t_1$ will yield the type $\texttt{T}_1$.
 
 \subsubsection{Added derived form \cite{pierce2002ProgLang}}
 \begin{equation*}
@@ -104,5 +136,5 @@ $\texttt{T} \rightarrow \texttt{T}$, then the application of
         \defeq \quad \texttt{let } x = \texttt{fix } (\lambda x \colon \texttt{T}_1 . t_1) \texttt{ in } t_2
     \end{split}
 \end{equation*}
-``Define the form $\texttt{letrec} \dots$ as a `let binding' with the application of
-the \texttt{fix} function to the term in $t_2$''.
+Define the form $\texttt{letrec} \dots$ as a ``let binding'' with the application of
+the \texttt{fix} function to the term in $t_2$.

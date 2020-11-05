@@ -9,7 +9,7 @@ object-oriented languages like C\#.
 This paper will use the generalized definition
 of the variant to describe the principle. Thus, instead of a sum type \texttt{T + T},
 we use the labeled variant type $\langle l_1 \colon \texttt{T}_1, l_2 \colon \texttt{T}_2 \rangle$.
-The sum type could be compared to Haskells ``\textit{Either a b}'' type, which can be
+The sum type could be compared to Haskell's ``\textit{Either a b}'' type, which can be
 either type ``a'' or ``b''.
 
 \subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
@@ -35,9 +35,9 @@ This syntax allows generalized labeled variants of types.
         \rightarrow [x_j \mapsto v_j]t_j
     \end{split}
 \end{equation*}
-``Check the variant with a \texttt{case variant} syntax and return
+Check the variant with a \texttt{case variant} syntax and return
 the given term to the right-hand side of the arrow. Replace the
-x variable in the term with the ascribed type''.
+x variable in the term with the ascribed type.
 
 \begin{equation*}
     \tag{Case}
@@ -50,8 +50,8 @@ x variable in the term with the ascribed type''.
         t_0 \rightarrow t'_0
     }
 \end{equation*}
-``If there is a step from $t_0$ to $t'_0$, evaluate the term
-in the case clause before applying any mapping''.
+If there is a step from $t_0$ to $t'_0$, evaluate the term
+in the case clause before applying any mapping.
 
 \begin{equation*}
     \tag{Variant}
@@ -61,8 +61,8 @@ in the case clause before applying any mapping''.
         t_i \rightarrow t'_i
     }
 \end{equation*}
-``If there is a step from $t_i$ to $t'_i$, evaluate the term
-in the variant''.
+If there is a step from $t_i$ to $t'_i$, evaluate the term
+in the variant.
 
 \subsubsection{Addition to the typing rules \cite{pierce2002ProgLang}}
 \begin{equation*}
@@ -73,9 +73,9 @@ in the variant''.
     \Gamma \vdash t_j \colon \texttt{T}_j
     }
 \end{equation*}
-``When the type of $t_j$ is in the typing environment, add the labeled
+When the type of $t_j$ is in the typing environment, add the labeled
 variant types in the environment as well with their corresponding labels and
-term types''.
+term types.
 
 \begin{equation*}
     \tag{Case}
@@ -88,8 +88,8 @@ term types''.
     \end{split}
     }
 \end{equation*}
-``If $t_0$ is a variant with $i$ label (and therefore variants), the `case of' syntax
-will return the specific type of the variant instead of the summary type''.
+If $t_0$ is a variant with $i$ label (and therefore variants), the `case of' syntax
+will return the specific type of the variant instead of the summary type.
 
 With the variant types in place, our language could now type-check and interpret
 the following lines of code (given in the Haskell syntax for readability):

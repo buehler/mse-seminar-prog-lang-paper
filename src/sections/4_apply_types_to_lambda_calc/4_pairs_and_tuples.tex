@@ -39,8 +39,8 @@ The projection is needed to access the elements in a tuple at the given index.
     \tag{Tuple projection}
     \{v_i^{i \in 1..n}\} . j \rightarrow v_j
 \end{equation*}
-``When the projection with index $j$ is applied to a tuple with
-$i$ values, then return the value with index $j$''.
+When the projection with index $j$ is applied to a tuple with
+$i$ values, then return the value with index $j$.
 
 \begin{equation*}
     \tag{Projection}
@@ -50,8 +50,8 @@ $i$ values, then return the value with index $j$''.
         t_1 \rightarrow t'_1
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$, evaluate the step
-in the syntax before executing the projection''.
+If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before executing the projection.
 
 \begin{equation*}
     \tag{Tuple}
@@ -61,8 +61,8 @@ in the syntax before executing the projection''.
     t_j \rightarrow t'_j
     }
 \end{equation*}
-``If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
-term $t_j$ to $t'_j$ that is not a value''. This forces the tuple to
+If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
+term $t_j$ to $t'_j$ that is not a value. This forces the tuple to
 be fully evaluated before any projections can be executed on the tuple.
 Moreover, it enforces the evaluation direction for the tuple from left to write.
 In other terms: $\{t_1, t_2\} \mapsto \{v_1, t_2\} \mapsto \{v_1, v_2\}$.
@@ -76,8 +76,8 @@ In other terms: $\{t_1, t_2\} \mapsto \{v_1, t_2\} \mapsto \{v_1, v_2\}$.
     \text{for each } i & \Gamma \vdash t_i \colon \texttt{T}_i
     }
 \end{equation*}
-``For each element in the tuple with index $i$, we calculate the type
-and add the whole tuple to the typing context $\Gamma$ in the form $\{T_1, T_2, \dots\}$''.
+For each element in the tuple with index $i$, we calculate the type
+and add the whole tuple to the typing context $\Gamma$ in the form $\{T_1, T_2, \dots\}$.
 
 \begin{equation*}
     \tag{Projection}
@@ -87,5 +87,5 @@ and add the whole tuple to the typing context $\Gamma$ in the form $\{T_1, T_2, 
     \Gamma \vdash t_1 \colon \{\texttt{T}_i^{i \in 1..n}\}
     }
 \end{equation*}
-``If the term $t_1$ is of a tuple type with $i$ entries, the projection
-$t_1 . j$ will yield an element of type $\texttt{T}_j$''.
+If the term $t_1$ is of a tuple type with $i$ entries, the projection
+$t_1 . j$ will yield an element of type $\texttt{T}_j$.

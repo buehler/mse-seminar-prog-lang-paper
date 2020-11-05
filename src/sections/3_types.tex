@@ -80,7 +80,7 @@ of the applied \texttt{succ} or \texttt{pred} function must be of type \texttt{N
 defines that the input for the ``\texttt{if}'' must be a boolean value and the result is
 of type \texttt{T}. Both branches of the condition must have the same type.
 
-\subsubsection{Typesafety}
+\subsubsection{Type-Safety}
 
 The given typing rules give our typing system a pretty important property:
 \textit{safety} (or \textit{soundness}) \cite{pierce2002ProgLang}.
@@ -205,12 +205,12 @@ are needed:
     }
 \end{equation*}
 
-``The type that is assumed for x is in the set of $\Gamma$''.
+The type that is assumed for x is in the set of $\Gamma$.
 
 \begin{equation*}
     \tag{Application}
     \infer{
-        \Gamma \vdash t_1 t_2 \colon \texttt{T}_{12}
+        \Gamma \vdash t_1\,t_2 \colon \texttt{T}_{12}
     }{
         \Gamma \vdash t_1 \colon \texttt{T}_{11} \rightarrow \texttt{T}_{12}
         &
@@ -218,10 +218,10 @@ are needed:
     }
 \end{equation*}
 
-``If $t_1$ is a function that takes $T_{11}$ and returns
+If $t_1$ is a function that takes $T_{11}$ and returns
 $T_{12}$ and the term $t_2$ is a value of type $T_{12}$, then
 the result of the application of $t_1$ to $t_2$ will
-be of type $T_{12}$''.
+be of type $T_{12}$.
 \\[12pt]
 Translated into a programming language:
 

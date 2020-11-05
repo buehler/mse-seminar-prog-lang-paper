@@ -33,8 +33,8 @@ note is that the projection is not done via an index but with a label $l$.
     \tag{Record projection}
     \{l_i = v_i^{i \in 1..n}\} . l_j \rightarrow v_j
 \end{equation*}
-``When the projection with label $j$ is applied to a record with
-$i$ values, return the value with the label $j$''.
+When the projection with label $j$ is applied to a record with
+$i$ values, return the value with the label $j$.
 
 \begin{equation*}
     \tag{Projection}
@@ -44,8 +44,8 @@ $i$ values, return the value with the label $j$''.
         t_1 \rightarrow t'_1
     }
 \end{equation*}
-``If there is a step from $t_1$ to $t'_1$, evaluate the step
-in the syntax before executing the projection''.
+If there is a step from $t_1$ to $t'_1$, evaluate the step
+in the syntax before executing the projection.
 
 \begin{equation*}
     \tag{Record}
@@ -58,8 +58,8 @@ in the syntax before executing the projection''.
         t_j \rightarrow t'_j
     }
 \end{equation*}
-``If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
-term $l_j = t_j$ to $l_j = t'_j$ that is not a value''. This inforces
+If there is a step from $t_j$ to $t'_j$, evaluate the leftmost
+term $l_j = t_j$ to $l_j = t'_j$ that is not a value. This enforces
 the same evaluation rules on records as the above rules did on tuples.
 In other terms:
 $\{\text{foo}=t_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=v_2\}$.
@@ -73,9 +73,9 @@ $\{\text{foo}=t_1, \text{bar}=t_2\} \mapsto \{\text{foo}=v_1, \text{bar}=t_2\} \
     \text{for each } i & \Gamma \vdash t_i \colon \texttt{T}_i
     }
 \end{equation*}
-``For each element in the record with label $l$, we calculate the type
+For each element in the record with label $l$, we calculate the type
 and add the whole record to the typing context $\Gamma$ in the form
-$\{l_1 \colon T_1, l_2 \colon T_2, \dots\}$''.
+$\{l_1 \colon T_1, l_2 \colon T_2, \dots\}$.
 
 \begin{equation*}
     \tag{Projection}
@@ -85,6 +85,6 @@ $\{l_1 \colon T_1, l_2 \colon T_2, \dots\}$''.
     \Gamma \vdash t_1 \colon \{l_i \colon \texttt{T}_i^{i \in 1..n}\}
     }
 \end{equation*}
-``If the term $t_1$ is a record type with $i$ entries, the projection
+If the term $t_1$ is a record type with $i$ entries, the projection
 $t_1 . l_j$ will yield an element of type $\texttt{T}_j$ at
-the position of label $l_j$''.
+the position of label $l_j$.

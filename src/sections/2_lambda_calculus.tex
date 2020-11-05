@@ -21,21 +21,6 @@ Those three operations can be viewed in the following ``grammar'':
     | t t : application
 \end{bnfgrammar}
 
-The untyped $\lambda$-Calculus is Turing complete,
-which means it can compute \textit{any} program and
-therefore can run infinitely.
-In an untyped $\lambda$ system, it is possible to search
-for the successor of ``true'', which
-requires the argument to be a number and therefore
-results in a stuck state.
-
-Since it is not desirable for computer programs to run to infinity,
-there has to be a way to split up computer programs into two categories:
-The ``useful'' and ``useless'' ones. Any program that will run forever
-or that will be stuck in an error state counts towards the ``useless'' ones.
-Other programs that have valid inputs and outputs will be counted towards ``useful''
-programs.
-
 For the further progress of this paper, it is necessary to recall
 the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002ProgLang}:
 
@@ -68,3 +53,31 @@ the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002P
     | 0 : zero value
     | succ nv : successor value
 \end{bnfgrammar}
+
+The untyped $\lambda$-Calculus is Turing complete,
+which means it can compute \textit{any} program.
+In such an untyped system two special, but unwanted, states can be achieved:
+
+\begin{itemize}
+    \item \textit{stuck}: the program is stuck when no more
+          rules can be applied and therefore the program
+          cannot run to its end
+    \item \textit{infinity}: the program encounters a term that
+          reduces to a term with the exact same terms
+          (e.g. general recursion without termination)
+          so that the program will never reach a terminating
+          state
+\end{itemize}
+
+In an untyped $\lambda$ system, it is possible to search
+for the successor of ``true'', which
+requires the argument to be a number and therefore
+results in a stuck state since no more valid rules
+can be applied.
+
+Since it is not desirable for computer programs to run to infinity or be stuck at a point in time,
+there has to be a way to split up computer programs into two categories:
+The ``useful'' and ``useless'' ones. Any program that will run forever
+or that will be stuck in an error state counts towards the ``useless'' ones.
+Other programs that have valid inputs and outputs will be counted towards ``useful''
+programs.
