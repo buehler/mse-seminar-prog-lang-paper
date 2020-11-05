@@ -25,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: main-error
-          path: src/main.(pdf|tex|log)
+          path: src/
       - uses: actions/upload-artifact@v2
         with:
           name: paper
@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: diff-error
-          path: latexdiff-base/src/diff.(pdf|tex|log)
+          path: latexdiff-base/src/
       - uses: actions/upload-artifact@v2
         with:
           name: diff

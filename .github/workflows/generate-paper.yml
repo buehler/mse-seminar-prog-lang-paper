@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: main-error
-          path: src/main.(pdf|tex|log)
+          path: src/
       - uses: actions/upload-artifact@v2
         with:
           name: paper
