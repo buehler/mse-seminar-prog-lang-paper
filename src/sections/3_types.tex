@@ -6,9 +6,45 @@ To get one step closer towards the goal of having a
 simply typed $\lambda$-Calculus, we need to define
 what a type is.
 
+\subsection{Inference Rules}
+
+The rest of the paper states some typed relations with
+``inference rules''. As an example, consider the following
+expression:
+
+\begin{equation*}
+    \tag{Inference Rule}
+    \infer{
+        C
+    }{
+        A & B
+    }
+\end{equation*}
+
+Inference rules can be read as ``if this than that''. They act
+similar to an \textit{if} statement without an else part of a programming language.
+If A and B are valid, C follows. They do not give information about the
+case when A or B is not valid.
+
+A more complex example, as shown in \cref{eq:BoolInference}, is:
+
+\begin{equation*}
+    \infer{
+        \text{if } t_1 \text{ then } t_2 \text{ else } t_3 \colon \texttt{T}
+    }{
+        t_1 \colon \texttt{Bool} & t_2 \colon \texttt{T} & t_3 \colon \texttt{T}
+    }
+\end{equation*}
+
+This reads as: if the term ``$t_1$'' is of a boolean type and the terms ``$t_2$''
+and ``$t_3$'' are of type \texttt{T},
+then the resulting type of the expression \texttt{if $t_1$ then $t_2$ else $t_3$} is
+of the type \texttt{T}. All elements above the line the antecedents that must be met
+and below the line are the consequences.
+
 \subsection{Types}
 
-A type is a classification of a value or multiple values.
+A type is a classification of a value or multiple values \cite{pierce2002ProgLang}.
 We typically use mathematical terms to describe a type and the relation
 of values to their types. When we say ``$x : T$'', we mean that
 ``x is of type T'', or in mathematical terms: ``$x \in T$'' \cite{pierce2002ProgLang}.
@@ -24,7 +60,7 @@ For example:
 \end{equation*}
 
 We can determine the resulting type of \textit{f} without
-\textit{running} the function. Shown in typescript syntax this could mean:
+\textit{running} the function. Shown in TypeScript syntax this could mean:
 
 \begin{minted}{TypeScript}
     const x: number = 1
@@ -33,8 +69,12 @@ We can determine the resulting type of \textit{f} without
     f(x, y) // result is also of type number
 \end{minted}
 
+In TypeScript and JavaScript, a ``number'' is any numerical
+value. Nevertheless, the type-checker can determine the return type
+of the function based on the previous variables and their types.
+
 With such a possibility, we can rule out stuck or meaningless programs.
-However, how do we get there? We add the typing relation to
+To achieve this in a programming language we add the typing relation to
 the grammar and define that terms and variables must have a type:
 
 \begin{bnfgrammar}
@@ -44,7 +84,8 @@ the grammar and define that terms and variables must have a type:
     | \dots
 \end{bnfgrammar}
 
-To express types correctly, we also need new syntactic forms:
+To express the ``:T'' part in the grammar correctly, a new additional
+grammar must be created to express types correctly:
 
 \begin{bnfgrammar}
     T ::= : types$\colon$
@@ -64,7 +105,15 @@ the rules that are given by the untyped $\lambda$-Calculus.
     \texttt{0 : Nat}
 \end{center}
 
-\[\infer{ \text{if } t_1 \text{ then } t_2 \text{ else } t_3 \colon \texttt{T} }{ t_1 \colon \texttt{Bool} & t_2 \colon \texttt{T} & t_3 \colon \texttt{T} }\]
+\begin{equation*}
+    \label{eq:BoolInference}
+    \tag{If inference}
+    \infer{
+        \text{if } t_1 \text{ then } t_2 \text{ else } t_3 \colon \texttt{T}
+    }{
+        t_1 \colon \texttt{Bool} & t_2 \colon \texttt{T} & t_3 \colon \texttt{T}
+    }
+\end{equation*}
 
 \[\infer{ \text{succ } t_1 \colon \texttt{Nat} }{ t_1 \colon \texttt{Nat} }\]
 
@@ -82,11 +131,13 @@ of type \texttt{T}. Both branches of the condition must have the same type.
 
 \subsubsection{Type-Safety}
 
-The given typing rules give our typing system a pretty important property:
+The given typing rules give our type system a pretty important property:
 \textit{safety} (or \textit{soundness}) \cite{pierce2002ProgLang}.
-In conjunction with the normalization property \cite{pierce2002ProgLang} \cite{baader_nipkow_1998},
-which eliminates the Turing completeness in our system, we can guarantee that our programs
-that compile successfully with this type system will not ever go wrong. We can call
+The normalization property, which defines that for every term, there exists a rewrite rule that will
+yield an irreducible term \cite{pierce2002ProgLang,baader_nipkow_1998}.
+This property eliminates the Turing completeness in the untyped $\lambda$-Calculus, 
+we can guarantee that our programs
+that compile successfully with this type system will terminate. We can call
 such a program well-typed (i.e., it compiles according to the given typing rules \cite{cardelliTypeSystems}).
 
 This \textit{safety} is defined by two theorems \cite{pierce2002ProgLang}:
@@ -124,10 +175,48 @@ exists a definition of a simple type. Simple types are a first
 approach towards a typesafe environment for developers. They
 contain ``base types'' (or ``value types'') like \texttt{Bool} and
 \texttt{Nat} (natural numbers) as well as ``function types''.
+A language that only contains simple types and adheres to
+the principles of the previous sections is guaranteed to terminate.
 
-Function types are needed to grant the program the possibility to
-perform computations. Up until now, we can allocate variables to
-types and can perform an \textit{if} condition.
+When we apply ``simple types'' to the purely untyped
+$\lambda$-Calculus, the result is the ``pure simply typed $\lambda$-Calculus''.
+This could count as a programming language since we can perform
+all the basic operations a computation needs. We are also able to analyze
+the code and calculate the types needed for functions and variables
+and therefore can categorize our programs into meaningful and
+meaningless ones.
+
+Many imperative programming languages are simply typed since they do not
+know the (classic) concepts of ``classes'' and ``polymorphism''. Examples for such languages
+are:
+
+\begin{itemize}
+    \item BASIC
+    \item Lua
+    \item Go
+\end{itemize}
+
+BASIC\footnote{\url{https://en.wikipedia.org/wiki/BASIC}} for example, is an
+old language that does not contain any constructs like classes or
+functions\footnote{Later extensions of BASIC enabled object-orientation though.}.
+
+\begin{minted}{BASIC}
+    10 LET X=5
+    20 FOR I=1 TO N
+    30 PRINT "Hello, World! I="; $I
+    40 NEXT I
+\end{minted}
+
+The program above prints five times ``Hello, World! I='' and the actual
+number of I.
+
+The other two examples are modern programming languages which work without
+classic polymorphism and object-oriented inheritance while both contain
+some mechanism to ``simulate'' polymorphism. Lua\footnote{\url{https://www.lua.org/}}
+handles polymorphism via first-class functions and tables. Go\footnote{\url{https://golang.org/}}
+on the other side, only knows ``structs'' as data types. Structs are similar to
+``Records'' explained in \cref{subsec:Records}. With the help of \textit{interfaces}
+Go is able to provide \textit{runtime polymorphism}.
 
 \subsubsection{Base Types}
 
@@ -149,9 +238,12 @@ from Benjamin C. Pierce \cite{pierce2002ProgLang}:
 
 \begin{bnfgrammar}
     T ::= : types$\colon$
-    | \dots
     | A : base type
 \end{bnfgrammar}
+
+The given \texttt{A} "type-class" replaces the previous stated
+``\texttt{Nat}'' and ``\texttt{Bool}'' types. \texttt{A} now contains
+all base types.
 
 \subsubsection{Function Types}
 
@@ -188,10 +280,9 @@ rules to ensure the types of functions can be calculated statically:
 
 This typing rule for the general abstraction evaluation rule
 of the $\lambda$-Calculus adds
-a premise to our system that translates to ``if $x$ is of
-type $T_1$ and is in our typing context $\Gamma$ and
-the term $t_2$ is of type $T_2$, then the abstraction
-$\lambda x \colon T_1 . t_2$ has the type $T_1 \rightarrow T_2$''.
+a premise to our system that translates to ``in the typing context $\Gamma$,
+if $x$ is of type $T_1$ and the term $t_2$ is of type (or yields the type) $T_2$,
+then the abstraction $\lambda x \colon T_1 . t_2$ has the type $T_1 \rightarrow T_2$''.
 
 Furthermore, an additional typing rule for variables and applications
 are needed:
@@ -235,3 +326,7 @@ Translated into a programming language:
     // number that becomes a string (Application)
     const r = f(x)
 \end{minted}
+
+In general, translated to ``developer speech'', the variable
+remains the same, an abstraction is a function and the application
+is the execution of a function to get a result.

@@ -6,38 +6,17 @@
 }
 {Luca Cardelli and Peter Wegner (1985)}
 
-All modern programming languages have type systems.
+Many modern programming languages have type systems.
 They are either of a more dynamic nature - like JavaScript -
 or statically typed like C\#. Functional languages like Haskell have
 an even stricter form of a type system. They all have one thing in
-common: They aid the developer to create programs without 
+common: They aid the developer to create programs without
 the constant fear of runtime errors.
 
 This paper shall give the reader an idea of the steps that
 are needed to create a type system and how it is applied to
-an untyped language. This paper will use JavaScript - ish,
-TypeScript\footnote{\url{https://www.typescriptlang.org/}} - ish
-and Haskell\footnote{\url{https://www.haskell.org/}}
-syntax as examples for certain comparisons.
-Of course, JavaScript is not an untyped language, but
-it does not have a strict static type analysis which can lead
-to runtime errors during the interpretation and execution of the code.
-TypeScript is a superset of the JavaScript language which fills this
-gap and adds a static type analyzer as well as a type of compiler
-(i.e., transpiler) to the language.
-
-The result of the paper will be a simply typed programming language
-with simple extensions. The language will contain a simple type
-system that can statically analyse its language. Along the sections,
-the different rules and explanations for them are provided. 
-The paper does not include any variants of subtyping like polymorphism. The remainder
-of this paper will give further introduction into the topic,
-a brief overview over the $\lambda$-Calculus, an overview
-over the topic of ``types'' in general, and the application
-of simple types to the untyped $\lambda$-Calculus to create the
-simply-typed $\lambda$-Calculus as well as a list of simple
-extensions to the simply-typed $\lambda$-Calculus which make
-the language more practical and useful.
+an untyped language. This paper delivers the means
+The paper does not include any variants of subtyping like polymorphism.
 
 Why type systems are helpful and how they work
 is not a trivial question to be answered. Consider
@@ -54,9 +33,15 @@ is not going to create the desired output - assuming we have an untyped
 language. Strings and numbers are not
 of the same type and cannot be subtracted from one another. To determine
 that this is not going to work, the computer needs to execute
-the statements one by one and will encounter a wrong state.
-A type system can prevent such errors and create a
+the statements one by one and - depending on the language - will encounter
+a runtime error. A type system can prevent such errors and create a
 human-readable message when compiling such a program.
+
+The remainder of this paper will give a further introduction into the topic,
+a brief overview over the $\lambda$-Calculus, an overview
+over the topic of ``types'' in general, and the application
+of simple types to the untyped $\lambda$-Calculus to create the
+simply-typed $\lambda$-Calculus.
 
 The reader should have an understanding of programming
 languages and a brief understanding of the untyped

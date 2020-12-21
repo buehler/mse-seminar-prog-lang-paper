@@ -55,16 +55,19 @@ the grammar for arithmetic expressions of the untyped calculus \cite{pierce2002P
 \end{bnfgrammar}
 
 The untyped $\lambda$-Calculus is Turing complete,
-which means it can compute \textit{any} program.
+which means it can compute \textit{any} program, even
+such programs that will never terminate.
 In such an untyped system two special, but unwanted, states can be achieved:
 
 \begin{itemize}
     \item \textit{stuck}: the program is stuck when no more
           rules can be applied and therefore the program
-          cannot run to its end
+          cannot run to its end. A stuck program can only be
+          ``useful'' if it handles the stuck state (e.g. with an exception)
     \item \textit{infinity}: the program encounters a term that
           reduces to a term with the exact same terms
-          (e.g. general recursion without termination)
+          (e.g. general recursion without termination), or a
+          term that generates limitless further terms
           so that the program will never reach a terminating
           state
 \end{itemize}
