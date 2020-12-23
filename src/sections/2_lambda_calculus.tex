@@ -1,4 +1,5 @@
 \section{Lambda-Calculus ($\lambda$-Calculus)}
+\label{sec:calculus}
 
 A computer program can be described in various
 ways. One very famous variant is the ``turing machine''
@@ -63,7 +64,8 @@ In such an untyped system two special, but unwanted, states can be achieved:
     \item \textit{stuck}: the program is stuck when no more
           rules can be applied and therefore the program
           cannot run to its end. A stuck program can only be
-          ``useful'' if it handles the stuck state (e.g. with an exception)
+          ``useful'' if it handles the stuck state (i.e. with an exception
+          or some similar mechanism)
     \item \textit{infinity}: the program encounters a term that
           reduces to a term with the exact same terms
           (e.g. general recursion without termination), or a

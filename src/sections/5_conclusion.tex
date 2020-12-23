@@ -1,14 +1,36 @@
 \section{Conclusion}
 
-With the application of simple types to the $\lambda$-Calculus
-and the addition of ``simple extensions'', the result of this paper
-is a form of the ``simply-typed $\lambda$-Calculus'' with extensions to
-the language and the type system to make a practical language. It shows
-the additions needed and the steps taken to add a type system to an
-untyped language. 
+With this paper, we showed the usefulness of type-systems
+and their application on a ``toy language'', the $\lambda$-Calculus.
 
-It should be noted that the result is not a fully fledged programming language since
+The reader was introduced into the general topic in \cref{sec:intro}.
+In \cref{sec:calculus}, the paper explains the ways of expressing
+a program and how this is done in the untyped $\lambda$-Calculus.
+
+In \cref{sec:types} the paper gives an overview over
+the topic of ``types'', what they are, their use and
+how they are constructed. Also, a general understanding about
+``inference rules'' is given to the reader. The section
+concludes with the explanation of ``simple types''.
+
+\cref{sec:lambdaTypesExtensions} then describes the
+pure simply-typed $\lambda$-Calculus and what simple extensions
+are. The paper gives a list with the extensions from the work
+of Benjamin C. Pierce in \cite{pierce2002ProgLang} and a brief
+explanation. Furthermore, three interesting extensions are
+given a deeper look into how they are added to the language.
+
+With the application of simple types to the $\lambda$-Calculus
+and the addition of ``simple extensions'', the result is a form of the
+``simply-typed $\lambda$-Calculus'' with extensions to
+the language and the type system to make a practical language.
+
+It should be noted that the pure simply-typed $\lambda$-Calculus
+with its extensions is not a fully-fledged programming language since
 subtyping and polymorphism are still missing which is a big part of
 modern languages. The simply-typed $\lambda$-Calculus, however, is
 a good example for type-science since it is not too complex and
 can be extended quite easily.
+
+Further study into the topic may now include complex topics like
+``polymorphism''.

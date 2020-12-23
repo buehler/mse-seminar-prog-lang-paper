@@ -1,9 +1,10 @@
 \section{Types and Simple Types}
+\label{sec:types}
 
 \epigraph{Well-typed programs cannot ``go wrong.''}{Robin Milner (1978)}
 
 To get one step closer towards the goal of having a
-simply typed $\lambda$-Calculus, we need to define
+simply-typed $\lambda$-Calculus, we need to define
 what a type is.
 
 \subsection{Inference Rules}
@@ -179,14 +180,14 @@ A language that only contains simple types and adheres to
 the principles of the previous sections is guaranteed to terminate.
 
 When we apply ``simple types'' to the purely untyped
-$\lambda$-Calculus, the result is the ``pure simply typed $\lambda$-Calculus''.
+$\lambda$-Calculus, the result is the ``pure simply-typed $\lambda$-Calculus''.
 This could count as a programming language since we can perform
 all the basic operations a computation needs. We are also able to analyze
 the code and calculate the types needed for functions and variables
 and therefore can categorize our programs into meaningful and
 meaningless ones.
 
-Many imperative programming languages are simply typed since they do not
+Many imperative programming languages are simply-typed since they do not
 know the (classic) concepts of ``classes'' and ``polymorphism''. Examples for such languages
 are:
 
@@ -280,9 +281,9 @@ rules to ensure the types of functions can be calculated statically:
 
 This typing rule for the general abstraction evaluation rule
 of the $\lambda$-Calculus adds
-a premise to our system that translates to ``in the typing context $\Gamma$,
-if $x$ is of type $T_1$ and the term $t_2$ is of type (or yields the type) $T_2$,
-then the abstraction $\lambda x \colon T_1 . t_2$ has the type $T_1 \rightarrow T_2$''.
+a premise to our system that translates to ``if $x$ is of type
+$T_1$, bound in the context $\Gamma$ and the term $t_2$ yields the type $T_2$,
+then the abstraction $\lambda x \colon T_1 . t_2$ is bound to the type $T_1 \rightarrow T_2$''.
 
 Furthermore, an additional typing rule for variables and applications
 are needed:
@@ -296,7 +297,9 @@ are needed:
     }
 \end{equation*}
 
-The type that is assumed for x is in the set of $\Gamma$.
+The type that is assumed for x is in the set of $\Gamma$. The inference
+rule above states that ``if the type \texttt{T} of $x$ is an element of
+$\Gamma$, then bind the term $x$ to that type in the context $\Gamma$''.
 
 \begin{equation*}
     \tag{Application}
@@ -309,10 +312,11 @@ The type that is assumed for x is in the set of $\Gamma$.
     }
 \end{equation*}
 
-If $t_1$ is a function that takes $T_{11}$ and returns
-$T_{12}$ and the term $t_2$ is a value of type $T_{12}$, then
+If $t_1$ is a function that takes $T_{11}$, returns
+$T_{12}$ and is bound in the context $\Gamma$;
+and the term $t_2$ is a value of type $T_{12}$ in the context $\Gamma$, then
 the result of the application of $t_1$ to $t_2$ will
-be of type $T_{12}$.
+be of type $T_{12}$ and is bound into the context.
 \\[12pt]
 Translated into a programming language:
 

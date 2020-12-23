@@ -1,4 +1,5 @@
 \section{$\lambda$-Calculus, Simple Types and Extensions}
+\label{sec:lambdaTypesExtensions}
 
 To make the language of the $\lambda$-Calculus more useful, however, we can extend
 our simple types with ``simple extensions'' which do not include any
@@ -11,13 +12,13 @@ program is able to terminate. But only with those simple types, a programming
 language would be tedious to use and many lines of code need to be written
 for a meaningful program. Because of this matter, it is possible to define
 extensions to the simple type system to let the simple typed $\lambda$-Calculus
-language be more practical. The following sections will explain three
-extensions and how they are constructed as well as a basic reference for the
-simply typed calculus.
+language be more practical. The following sections will explain the
+pure simply-typed $\lambda$-Calculus, an overview over the extensions and
+three extensions in particular.
 
-\subsection{Pure simply typed $\lambda$-Calculus}
+\subsection{Pure simply-typed $\lambda$-Calculus}
 
-For the further reading, the rules of the ``pure simply typed $\lambda$-Calculus''
+For the further reading, the rules of the ``pure simply-typed $\lambda$-Calculus''
 are stated again \cite{pierce2002ProgLang}.
 
 \subsubsection{Syntax}
@@ -113,10 +114,62 @@ cornerstone of the ``simple extensions'' which we will see in the
 next sections. Those sections will introduce new elements to the given
 categories (``syntax'', ``evaluation'', ``typing'').
 
+\subsection{Simple Extensions}
+
+The work of Benjamin C. Pierce does list numerous extensions to the
+pure simply-typed $\lambda$-Calculus. In later sections, ``Let Bindings'',
+``Sums and Variants'' as well as ``Records'' are explained. The provided
+extensions in the book are briefly listed below \cite{pierce2002ProgLang}:
+
+\begin{itemize}
+    \item \textit{Unit}: The \texttt{unit} type represents
+          a useful type often found in functional
+          programming languages like Haskell or F\#.
+          It is used to ``throw away'' a computation result
+          and combine multiple computations together \cite{pierce2002ProgLang}.
+    \item \textit{Ascription}: A handy tool to substitute long type names with
+          short ones. It is often used for ``documentation'' purposes \cite{pierce2002ProgLang}.
+    \item \textit{Let Bindings}: Let bindings are a tool to
+          avoid repetition in complex expressions \cite{pierce2002ProgLang}. They are explained in \cref{subsec:let}.
+    \item \textit{Pairs and Tuples}: ``Pairs'' - and their more general counterpart
+          ``Tuples'' - are a construct to group values and terms together.
+          Pairs are product types of exactly two values
+          and therefore have slightly different evaluation rules. Tuples are the general way
+          of pairs \cite{pierce2002ProgLang}.
+    \item \textit{Records}: ``Records'' provide a way to label the entries
+          of a tuple and create a possibility to
+          semantically group terms together \cite{pierce2002ProgLang}. They are explained in \cref{subsec:Records}.
+    \item \textit{Variants}: Variants are \textit{algebraic data types} and are often used in functional
+          languages for pattern matching. One can compare them vaguely to \textit{Enums} of
+          object-oriented languages like C\#. They enable the language to sum together multiple
+          shapes of a type into a summary type \cite{pierce2002ProgLang}. Find the sum
+          and variant types explained in \cref{subsec:variants}.
+    \item \textit{General Recursion}: The general recursion enables the language to
+          ``iterate'' through a list and perform recursive computations. It is
+          enabled via a language primitive (``\texttt{fix}'') as explained
+          in the work by Pierce \cite{pierce2002ProgLang}.
+    \item \textit{Lists}: A list is a practical and useful type constructor
+          that describes a finite set of elements which are fetched from the
+          type of the list. \cite{pierce2002ProgLang}
+    \item \textit{References}: A mechanism to assign a value to a variable
+          which can be changed later on. A reference enables a language to
+          perform ``computational effects'' \cite{pierce2002ProgLang}.
+    \item \textit{Exceptions}: Exceptions are a way of signaling that
+          a function in question is not able to carry out a given task. This signal
+          can be used for error handling at runtime \cite{pierce2002ProgLang}.
+\end{itemize}
+
+As seen, the given extension do create more meaning to the type system
+and the language of the simply-typed $\lambda$-Calculus. One should
+keep in mind that it is a ``toy language'' to study type systems and not
+a practical programming language.
+
 \subsection{Let Bindings}
 \label{subsec:let}
 
-Let bindings are a useful tool to avoid repetition in complex expressions.
+Let bindings enable the language to avoid repetition for complex
+terms and expressions. One can substitute a more complex term
+(e.g., a calculation of some sort) with one ``name''.
 They are found in Haskell as well:
 
 \begin{minted}{Haskell}
@@ -125,6 +178,9 @@ They are found in Haskell as well:
         in
             result
 \end{minted}
+
+Let bindings are essentially a substitution for another term or
+variable.
 
 \subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
@@ -279,11 +335,11 @@ on the other hand, parsing \texttt{"12i"} would result in \texttt{"Nothing"}.
 \subsection{Records}
 \label{subsec:Records}
 
-Since tuples have indices and must be accessed that way, we may want to
+Since tuples have indices and must be accessed that way (as stated in the overview), we may want to
 name the elements in a tuple. ``Records'' provide a way to label the entries
 of a tuple and create a possibility to semantically group terms together.
 One could loosely compare them with \texttt{Structs} from programming
-languages like \texttt{GoLang}.
+languages like \texttt{Go}.
 
 \subsubsection{Addition to the syntax \cite{pierce2002ProgLang}}
 \begin{bnfgrammar}
